@@ -302,11 +302,18 @@ const Booking = (() => {
     if ($("ownerPhone"))
       $("ownerPhone").value = user.phone
         ? (window.Masks ? Masks.formatSvPhone(user.phone) : user.phone)
-        : "";
+        : (window.Masks ? Masks.patterns["sv-phone"] : "");
     if ($("ownerEmail")) $("ownerEmail").value = user.email || "";
     if ($("ownerAddress")) $("ownerAddress").value = user.address || "";
 
     bindPhotoPicker(document, pet?.photo);
+    if (window.initMasks) {
+      // Re-pintar valores ya cargados en campos con máscara
+      document.querySelectorAll("[data-mask]").forEach((el) => {
+        delete el.dataset.maskBound;
+      });
+      initMasks();
+    }
 
     const next = $("btn-next");
     if (!next) return;
@@ -473,6 +480,12 @@ const Booking = (() => {
     const draft = ensureDraft("pago");
     if (draft === null) return;
     fillSummary();
+    if (window.initMasks) {
+      document.querySelectorAll("[data-mask]").forEach((el) => {
+        delete el.dataset.maskBound;
+      });
+      initMasks();
+    }
 
     let method = draft.paymentMethod || "card";
     const card = document.getElementById("payCard");
@@ -480,12 +493,15 @@ const Booking = (() => {
 
     function setPay(mode) {
       method = mode;
+      Store.setDraft({ paymentMethod: mode });
       card?.classList.toggle("on", mode === "card");
       cash?.classList.toggle("on", mode === "cash");
       const cIn = card?.querySelector("input");
       const kIn = cash?.querySelector("input");
       if (cIn) cIn.checked = mode === "card";
       if (kIn) kIn.checked = mode === "cash";
+      const fields = card?.querySelector(".card-fields");
+      if (fields) fields.hidden = mode !== "card";
     }
     card?.addEventListener("click", () => setPay("card"));
     cash?.addEventListener("click", () => setPay("cash"));
@@ -495,6 +511,11 @@ const Booking = (() => {
       e.preventDefault();
       const user = Store.currentUser();
       const d = Store.getDraft();
+      if (!user || !d?.petId || !d?.date || !d?.time) {
+        toast("Faltan datos de la reserva. Vuelve a empezar.");
+        setTimeout(() => redirect("reserva-mascota.html"), 700);
+        return;
+      }
       if (method === "card") {
         const num = Masks.digits(document.getElementById("cardNumber")?.value || "");
         const exp = Masks.digits(document.getElementById("cardExp")?.value || "");
@@ -836,7 +857,12 @@ const Booking = (() => {
 
     fillOwner();
     renderPets();
-    if (window.initMasks) initMasks();
+    if (window.initMasks) {
+      document.querySelectorAll("[data-mask]").forEach((el) => {
+        delete el.dataset.maskBound;
+      });
+      initMasks();
+    }
 
     $id("ownerForm")?.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -858,6 +884,12 @@ const Booking = (() => {
         address: ($id("ownerAddress")?.value || "").trim(),
       });
       fillOwner();
+      if (window.initMasks) {
+        document.querySelectorAll("[data-mask]").forEach((el) => {
+          delete el.dataset.maskBound;
+        });
+        initMasks();
+      }
       toast("Datos del perfil guardados");
     });
 

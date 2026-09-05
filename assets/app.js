@@ -535,6 +535,11 @@ const Masks = {
     input.maxLength = pattern.length;
     input.placeholder = pattern;
     input.spellcheck = false;
+    input.setAttribute("size", "1");
+    input.style.minWidth = "0";
+    input.style.width = "100%";
+    input.style.maxWidth = "100%";
+    input.style.boxSizing = "border-box";
 
     const slots = this.slotCount(pattern);
     const self = this;
@@ -662,7 +667,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderFooter();
   initFaq();
   initGuards();
-  initHeroCta();
   bootMasksEarly();
   try {
     initFixedWidth();

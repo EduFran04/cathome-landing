@@ -692,16 +692,31 @@ body.nav-open { overflow: hidden; }
 .phone-field {
   display: flex; align-items: stretch;
   background: #fff; border: 1px solid #e7e3dc; border-radius: 14px; overflow: hidden;
-  width: 100%; min-width: 0;
+  width: 100%; max-width: 100%; min-width: 0;
+  box-sizing: border-box;
 }
 .phone-field:focus-within { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(244,99,58,.14); }
 .phone-field .cc {
-  display: flex; align-items: center; gap: 7px;
-  padding: 0 14px; border-right: 1px solid #eceae4;
-  font-size: .92rem; font-weight: 500; flex: none;
+  display: flex; align-items: center; gap: 6px;
+  padding: 0 10px; border-right: 1px solid #eceae4;
+  font-size: .88rem; font-weight: 500; flex: 0 0 auto;
+  white-space: nowrap;
 }
-.phone-field .flag { width: 26px; height: 18px; border-radius: 3px; overflow: hidden; flex: none; }
-.phone-field input { flex: 1 1 0; min-width: 0; border: none; outline: none; padding: 15px 14px; background: none; }
+.phone-field .flag { width: 22px; height: 15px; border-radius: 3px; overflow: hidden; flex: none; }
+.phone-field .cc .ic { display: none; } /* chevron decorativo: ahorra ancho en móvil */
+.phone-field input,
+.phone-field input.has-mask {
+  flex: 1 1 0%;
+  width: 100%;
+  min-width: 0 !important;
+  max-width: 100%;
+  border: none; outline: none;
+  padding: 14px 12px;
+  background: none;
+  box-sizing: border-box;
+  letter-spacing: 0.02em;
+  font-size: .95rem;
+}
 .phone-field input::placeholder { color: #9aa79f; }
 .terms-row {
   display: flex; align-items: center; gap: 10px;
@@ -2365,11 +2380,17 @@ body.is-mobile .trust-bar {
 
 .photo-modal {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
   z-index: 10000;
   display: grid;
   place-items: center;
-  padding: 20px 14px;
+  padding: 16px;
+  box-sizing: border-box;
 }
 .photo-modal[hidden] { display: none !important; }
 .photo-modal-backdrop {
@@ -2380,13 +2401,16 @@ body.is-mobile .trust-bar {
 .photo-modal-card {
   position: relative;
   z-index: 1;
-  width: min(440px, 100%);
+  width: min(440px, calc(100vw - 32px));
+  max-width: 100%;
   max-height: min(88vh, 640px);
   overflow: auto;
   background: #fff;
   border-radius: 22px;
   padding: 20px 18px 16px;
   box-shadow: 0 22px 50px rgba(0, 0, 0, .22);
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 .photo-modal-head {
   display: flex;
@@ -2519,6 +2543,7 @@ body.photo-modal-open { overflow: hidden; }
 .pay-option .po-head input { accent-color: var(--green); }
 .pay-option .hint { font-size: .8rem; color: var(--muted); margin-left: 28px; }
 .card-fields { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); }
+.pay-option:not(.on) .card-fields { display: none !important; }
 .trust-trio {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
   margin: 20px 0 8px;
@@ -2744,20 +2769,42 @@ body.is-mobile .ticket-qr { max-width: none; }
 
 /* Login tabs + overlay social */
 .login-tabs {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px;
-  background: var(--green-soft-2); border-radius: 12px; padding: 4px;
-  width: 100%; max-width: 100%; box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  background: var(--green-soft-2);
+  border-radius: 12px;
+  padding: 4px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 .login-tab {
-  border: none; background: transparent; border-radius: 10px;
-  padding: 10px; font-weight: 600; font-size: .84rem; cursor: pointer;
-  color: var(--muted); min-width: 0;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  padding: 10px 8px;
+  font-weight: 600;
+  font-size: .84rem;
+  cursor: pointer;
+  color: var(--muted);
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 .login-tab.on { background: #fff; color: var(--green-deep); box-shadow: var(--shadow-sm); }
+.login-panel {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
 .login-panel .field label { font-size: .78rem; font-weight: 600; color: var(--green-deep); margin-bottom: 6px; display: block; }
 .login-panel .field input {
   width: 100%; border: 1.5px solid var(--line); border-radius: 12px;
-  padding: 12px 14px; outline: none;
+  padding: 12px 14px; outline: none; box-sizing: border-box;
 }
 .login-panel .field input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(244,99,58,.12); }
 .auth-overlay {
@@ -3131,11 +3178,13 @@ body.is-mobile .book-panel .panel-head > .btn {
 input.has-mask {
   font-variant-numeric: tabular-nums;
   font-family: "Poppins", ui-monospace, monospace;
-  letter-spacing: .04em;
+  letter-spacing: .03em;
   color: var(--green-deep);
+  min-width: 0;
+  max-width: 100%;
 }
 input.has-mask::placeholder {
-  letter-spacing: .04em;
+  letter-spacing: .03em;
   color: #b7c2bb;
 }
 
@@ -3233,35 +3282,39 @@ input.has-mask::placeholder {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr 1fr;
     gap: 4px;
     padding: 3px;
   }
   body[data-density="login"] .login-tab {
     min-width: 0;
+    width: 100%;
     padding: 10px 6px;
     font-size: .8rem;
   }
-  body[data-density="login"] .phone-field {
+  body[data-density="login"] .login-panel {
     width: 100%;
     min-width: 0;
+  }
+  body[data-density="login"] .phone-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
   }
   body[data-density="login"] .phone-field .cc {
     padding: 0 8px;
     gap: 4px;
     font-size: .8rem;
-    flex: none;
   }
   body[data-density="login"] .phone-field .flag {
-    width: 22px;
-    height: 15px;
+    width: 20px;
+    height: 14px;
   }
-  body[data-density="login"] .phone-field .cc .ic {
-    display: none;
-  }
-  body[data-density="login"] .phone-field input {
-    min-width: 0;
-    flex: 1 1 0;
+  body[data-density="login"] .phone-field input,
+  body[data-density="login"] .phone-field input.has-mask {
+    min-width: 0 !important;
+    width: 100% !important;
+    flex: 1 1 0% !important;
     padding: 13px 10px;
     font-size: .9rem;
     letter-spacing: .02em;
@@ -3385,8 +3438,12 @@ body.is-mobile[data-density="login"] .login-card {
   padding: 20px 14px 22px !important;
 }
 body.is-mobile[data-density="login"] .login-tabs {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
 }
+body.is-mobile[data-density="login"] .phone-field,
 body.is-mobile[data-density="login"] .phone-field input {
-  min-width: 0;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
