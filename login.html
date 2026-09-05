@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-fixed-width="1400" data-density="login">
+<body data-density="login">
 
 <main class="login-page">
   <div class="login-wave top"></div>
@@ -23,19 +23,8 @@
   </div>
 
   <section class="login-card">
-    <div class="brand">
-      <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M5 30 32 8l27 22" fill="none" stroke="#e2603a" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13 28.5h38V50a3 3 0 0 1-3 3H16a3 3 0 0 1-3-3V28.5Z" fill="#fff" stroke="#e2603a" stroke-width="3"/>
-        <path d="M23 41.5 24.6 34l4.7 3.4h5.4L39.4 34 41 41.5" fill="#f0a469"/>
-        <path d="M23 41.5c0 5.4 4 9 9 9s9-3.6 9-9Z" fill="#f0a469"/>
-        <circle cx="28.4" cy="44" r="1.5" fill="#41301f"/>
-        <circle cx="35.6" cy="44" r="1.5" fill="#41301f"/>
-      </svg>
-      <div>
-        <div class="name">Cat Home</div>
-        <div class="sub">VETERINARIA</div>
-      </div>
+    <div class="brand brand-logo-only">
+      <img class="logo-img login-brand-logo" src="assets/logo-cathome-clean.png" alt="Cat Home Veterinaria">
     </div>
 
     <h1>Bienvenido a Cat Home</h1>
@@ -46,7 +35,7 @@
 
     <div class="logo-ring">
       <div class="ring-img">
-        <img src="assets/logo-cathome.png" alt="Cat Home Veterinaria">
+        <img src="assets/logo-cathome-clean.png" alt="Cat Home Veterinaria">
       </div>
     </div>
 
@@ -69,15 +58,6 @@
         <span class="label">Continuar con Google</span>
       </button>
 
-      <button type="button" class="social-btn" id="btn-email-mode">
-        <svg class="brandmark" viewBox="0 0 32 32" aria-hidden="true">
-          <rect width="32" height="32" rx="8" fill="#14523b"/>
-          <path d="M7 11.2h18v11.2H7V11.2Z" fill="none" stroke="#fff" stroke-width="1.8"/>
-          <path d="m7.6 11.8 8.4 6.2 8.4-6.2" fill="none" stroke="#fff" stroke-width="1.8"/>
-        </svg>
-        <span class="label">Continuar con correo</span>
-      </button>
-
       <div class="or-divider">o continúa con</div>
 
       <div class="login-tabs" role="tablist">
@@ -98,7 +78,7 @@
             <svg class="ic" style="width:14px;height:14px;color:#8a978f"><use href="#i-chevron"/></svg>
             <span>+503</span>
           </div>
-          <input id="phone" type="tel" inputmode="numeric" placeholder="Número de teléfono" autocomplete="tel">
+          <input id="phone" type="tel" inputmode="numeric" data-mask="sv-phone" autocomplete="tel">
         </div>
       </div>
 
@@ -179,11 +159,16 @@
 <script src="assets/app.js"></script>
 <script>
 (async () => {
+  // Forzar máscaras en login (por si el boot async se atrasa)
+  if (window.initMasks) initMasks();
+
   await Store.init();
   if (Store.isLoggedIn()) {
     location.replace(loginRedirectTarget());
     return;
   }
+  // Invitado puede abrir login para crear/usar cuenta real (no redirigir)
+  if (window.initMasks) initMasks();
 
   const err = document.getElementById("login-error");
   const overlay = document.getElementById("authOverlay");
@@ -205,17 +190,15 @@
     tab.addEventListener("click", () => setMode(tab.dataset.tab));
   });
 
-  document.getElementById("btn-email-mode").addEventListener("click", () => {
-    setMode("email");
-    document.getElementById("email").focus();
-  });
-
   document.querySelectorAll("#demoAccounts .demo-account").forEach((btn) => {
     btn.addEventListener("click", () => {
       setMode("email");
       document.getElementById("email").value = btn.dataset.email || "";
       document.getElementById("password").value = btn.dataset.pass || "";
-      document.getElementById("phone").value = btn.dataset.phone || "";
+      const phoneEl = document.getElementById("phone");
+      phoneEl.value = window.Masks
+        ? Masks.formatSvPhone(btn.dataset.phone || "")
+        : btn.dataset.phone || "";
       document.getElementById("terms").checked = true;
       err.textContent = "";
       toast(`Cuenta de ${btn.querySelector("strong").textContent} lista · pulsa Continuar`);
@@ -301,8 +284,11 @@
   });
 
   document.getElementById("btn-guest").addEventListener("click", () => {
-    toast("Modo invitado: puedes explorar, pero no agendar citas");
-    setTimeout(() => (location.href = "index.html"), 800);
+    Store.startGuest();
+    toast("Modo invitado: puedes agendar. Guarda el código de tu cita para validarlo en clínica.");
+    let next = loginRedirectTarget();
+    if (next.includes("mis-citas")) next = "reserva-mascota.html";
+    setTimeout(() => (location.href = next), 800);
   });
 })();
 </script>

@@ -130,8 +130,23 @@ body.scrolled {
   display: flex; align-items: center; gap: 14px;
   padding: 8px 0;
 }
-.logo { display: flex; align-items: center; gap: 8px; }
-.logo-mark { width: 36px; height: 36px; flex: none; }
+.logo { display: flex; align-items: center; gap: 8px; flex: none; }
+.logo-img {
+  display: block;
+  height: 48px;
+  width: auto;
+  max-width: 168px;
+  object-fit: contain;
+  object-position: left center;
+}
+.logo-mark,
+.logo-img-mark {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  object-fit: contain;
+  display: block;
+}
 .logo-txt .name {
   font-family: "Kaushan Script", cursive;
   color: var(--orange);
@@ -145,6 +160,8 @@ body.scrolled {
 .logo-txt .sub::before, .logo-txt .sub::after {
   content: ""; height: 1px; width: 12px; background: currentColor; opacity: .6;
 }
+.site-footer .logo-img-mark { width: 52px; height: 52px; }
+.site-footer .logo-img { height: 56px; max-width: 200px; }
 .main-nav {
   display: flex; gap: 12px; margin-inline: auto;
   font-size: .72rem; font-weight: 500; color: var(--ink);
@@ -817,7 +834,12 @@ body[data-fixed-width] .impact,
 body[data-fixed-width] .pager { width: calc(var(--canvas) * .883); }
 body[data-fixed-width] .site-header .bar { width: calc(var(--canvas) * .938); }
 /* Chrome compartido: mismo logo/nav/CTA al navegar (compacto) */
-body[data-fixed-width] .logo-mark { width: calc(var(--canvas) * .032); height: auto; }
+body[data-fixed-width] .logo-mark,
+body[data-fixed-width] .logo-img-mark {
+  width: calc(var(--canvas) * .032);
+  height: calc(var(--canvas) * .032);
+  object-fit: contain;
+}
 body[data-fixed-width] .logo-txt .name { font-size: calc(var(--canvas) * .014); }
 body[data-fixed-width] .logo-txt .sub { font-size: calc(var(--canvas) * .006); }
 body[data-fixed-width] .main-nav {
@@ -1606,16 +1628,18 @@ body[data-density="reseÃ±as"] .t-item .date { font-size: calc(var(--design) * 
 
 
 
-/* Densidad login: mismo canvas de zoom; tarjeta a ancho fijo (sin vw) */
+/* Densidad login: pantalla centrada normal (sin canvas 1400) */
 body[data-density="login"] .login-page {
-  min-height: calc(var(--canvas) * .78);
-  width: var(--canvas);
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
   padding: 40px 24px 48px;
 }
 body[data-density="login"] .login-card {
-  width: 430px;
-  max-width: none;
+  width: min(430px, 100%);
+  max-width: 430px;
+  margin-inline: auto;
 }
 
 
@@ -1631,6 +1655,7 @@ body.is-mobile .header-cta .btn {
   min-width: 36px;
 }
 body.is-mobile .header-cta .btn .ic { width: 16px; height: 16px; }
+body.is-mobile .logo-img { height: 40px !important; max-width: 140px; }
 body.is-mobile .logo-mark { width: 28px !important; }
 body.is-mobile .logo-txt .name { font-size: .95rem !important; }
 body.is-mobile .logo-txt .sub { font-size: .4rem !important; }
@@ -2830,3 +2855,26 @@ body.is-mobile .citas-card .price-col { text-align: left; }
   color: var(--green-mid);
   font-weight: 600;
 }
+
+/* Campos con máscara literal */
+input.has-mask {
+  font-variant-numeric: tabular-nums;
+  font-family: "Poppins", ui-monospace, monospace;
+  letter-spacing: .04em;
+  color: var(--green-deep);
+}
+input.has-mask::placeholder {
+  letter-spacing: .04em;
+  color: #b7c2bb;
+}
+
+.login-card .brand-logo-only {
+  justify-content: center;
+  margin-bottom: 4px;
+}
+.login-card .login-brand-logo {
+  height: 72px;
+  max-width: 260px;
+  margin-inline: auto;
+}
+/* sin reglas de canvas que rompan el header en desktop/móvil */

@@ -9,9 +9,25 @@
       if (on) document.documentElement.style.zoom = "1";
     }
   };
+  const earlyZoom = () => {
+    const body = document.body;
+    if (!body || !body.hasAttribute("data-fixed-width")) return;
+    if (mq.matches) return;
+    const design = parseInt(body.dataset.design || "1400", 10) || 1400;
+    document.documentElement.style.setProperty("--canvas", "1400px");
+    document.documentElement.style.setProperty("--design", design + "px");
+    const w = window.innerWidth || document.documentElement.clientWidth;
+    if (w > 0 && w < 1400) {
+      document.documentElement.style.zoom = String(Math.floor((w / 1400) * 1e4) / 1e4);
+    }
+  };
   sync();
+  earlyZoom();
   mq.addEventListener("change", sync);
-  document.addEventListener("DOMContentLoaded", sync);
+  document.addEventListener("DOMContentLoaded", () => {
+    sync();
+    earlyZoom();
+  });
 })();
 /* ============================================================
    Cat Home Veterinaria — lógica compartida del prototipo
@@ -20,7 +36,8 @@
 
 const CH = {
   demoPhone: "70000000",
-  displayPhone: "+503 7000-0000",
+  displayPhone: "+503 6106-0204",
+  waNumber: "61060204",
   userName: "María José",
   whatsapp:
     "https://wa.me/50361060204?text=" +
@@ -35,6 +52,12 @@ const session = {
   get on() {
     if (window.Store) return Store.isLoggedIn();
     return localStorage.getItem("cathome_session") === "1";
+  },
+  get guest() {
+    return window.Store ? Store.isGuest() : false;
+  },
+  get canBook() {
+    return window.Store ? Store.canBook() : this.on;
   },
   start() {
     localStorage.setItem("cathome_session", "1");
@@ -56,11 +79,21 @@ function loginRedirectTarget() {
 
 function requireAuth() {
   if (!document.body.hasAttribute("data-requires-auth")) return true;
-  if (session.on) return true;
   const next = encodeURIComponent(
     location.pathname.split("/").pop() + location.search
   );
-  toast("Inicia sesión para continuar con tu cita");
+  // Mis citas y similares: solo cuenta real
+  if (document.body.hasAttribute("data-requires-account")) {
+    if (session.on) return true;
+    toast("Inicia sesión con tu cuenta para ver Mis citas");
+    setTimeout(() => {
+      location.href = `login.html?next=${next}`;
+    }, 500);
+    return false;
+  }
+  // Flujo de reserva: cuenta o invitado
+  if (session.canBook) return true;
+  toast("Inicia sesión o continúa como invitado para agendar");
   setTimeout(() => {
     location.href = `login.html?next=${next}`;
   }, 500);
@@ -123,19 +156,13 @@ function injectSprite() {
 }
 
 /* ---------- Marca ---------- */
+const LOGO_SRC = "assets/logo-cathome-clean.png";
+
 const logoMark = `
-<svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
-  <path d="M5 30 32 8l27 22" fill="none" stroke="#e2603a" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M13 28.5h38V50a3 3 0 0 1-3 3H16a3 3 0 0 1-3-3V28.5Z" fill="#fff" stroke="#e2603a" stroke-width="3"/>
-  <path d="M23 41.5 24.6 34l4.7 3.4h5.4L39.4 34 41 41.5" fill="#f0a469"/>
-  <path d="M23 41.5c0 5.4 4 9 9 9s9-3.6 9-9Z" fill="#f0a469"/>
-  <circle cx="28.4" cy="44" r="1.5" fill="#41301f"/>
-  <circle cx="35.6" cy="44" r="1.5" fill="#41301f"/>
-  <path d="M30.6 47.4h2.8" stroke="#41301f" stroke-width="1.4" stroke-linecap="round"/>
-</svg>`;
+<img class="logo-mark logo-img-mark" src="${LOGO_SRC}" alt="" width="44" height="44">`;
 
 function brandBlock() {
-  return `<a class="logo" href="index.html">
+  return `<a class="logo" href="index.html" aria-label="Cat Home Veterinaria">
     ${logoMark}
     <span class="logo-txt">
       <span class="name">Cat Home</span>
@@ -171,12 +198,16 @@ function renderHeader() {
 
   const user = session.user();
   const first = user ? user.name.split(" ")[0] : CH.userName.split(" ")[0];
+  // Invitado: mantiene "Iniciar sesión"; cuenta real: chip + Mis citas
   const right = session.on
     ? `<span class="user-chip">¡Hola, ${first}!</span>
-       <a class="btn btn-orange" href="reserva-mascota.html" data-needs-login>Reserva tu cita</a>
-       <a class="btn btn-soft" href="mis-citas.html" data-needs-login>Mis citas</a>
+       <a class="btn btn-orange" href="reserva-mascota.html">Reserva tu cita</a>
+       <a class="btn btn-soft" href="mis-citas.html" data-needs-account>Mis citas</a>
        <button class="btn btn-soft" data-logout>Salir</button>`
-    : `<a class="btn btn-orange" href="login.html">
+    : `${session.guest
+         ? `<a class="btn btn-soft" href="reserva-mascota.html" data-needs-login>Reserva tu cita</a>`
+         : ""}
+       <a class="btn btn-orange" href="login.html">
          <svg class="ic"><use href="#i-user"/></svg> Iniciar sesión
        </a>`;
 
@@ -243,7 +274,7 @@ function renderFooter() {
         <h4>Contáctanos</h4>
         <ul class="contact-list">
           <li><svg class="ic"><use href="#i-pin"/></svg> Colonia Escalón, San Salvador</li>
-          <li><svg class="ic"><use href="#i-phone"/></svg> 6106-0204</li>
+          <li><svg class="ic"><use href="#i-phone"/></svg> ${CH.waNumber.replace(/(\d{4})(\d{4})/, "$1-$2")}</li>
           <li><svg class="ic"><use href="#i-mail"/></svg> hola@cathome.com.sv</li>
           <li><svg class="ic"><use href="#i-clock"/></svg> Lun - Sáb: 8:00 a.m. - 6:00 p.m.</li>
         </ul>
@@ -293,10 +324,18 @@ function initFaq() {
 function initGuards() {
   $$("[data-needs-login]").forEach((el) =>
     el.addEventListener("click", (e) => {
+      if (session.canBook) return;
+      e.preventDefault();
+      toast("Inicia sesión o continúa como invitado para agendar");
+      setTimeout(() => (location.href = "login.html"), 700);
+    })
+  );
+  $$("[data-needs-account]").forEach((el) =>
+    el.addEventListener("click", (e) => {
       if (session.on) return;
       e.preventDefault();
-      toast("Inicia sesión para agendar o reprogramar tu cita");
-      setTimeout(() => (location.href = "login.html"), 700);
+      toast("Mis citas solo está disponible con una cuenta (no como invitado)");
+      setTimeout(() => (location.href = "login.html?next=mis-citas.html"), 700);
     })
   );
 }
@@ -309,7 +348,7 @@ const CANVAS = 1400;
 const MOBILE_MQ = "(max-width: 760px)";
 
 function initFixedWidth() {
-  if (!document.body.hasAttribute("data-fixed-width")) return;
+  if (!document.body || !document.body.hasAttribute("data-fixed-width")) return;
 
   const html = document.documentElement;
   const body = document.body;
@@ -333,12 +372,16 @@ function initFixedWidth() {
       return;
     }
 
+    // Igual que GitHub: resetear zoom, medir viewport real, escalar TODO el layout 1400
     body.style.minWidth = "";
     html.style.zoom = "1";
-    const disponible = html.clientWidth;
+    const disponible =
+      (window.visualViewport && window.visualViewport.width) ||
+      window.innerWidth ||
+      html.clientWidth;
     html.style.zoom =
       disponible < CANVAS
-        ? Math.floor((disponible / CANVAS) * 1e4) / 1e4
+        ? String(Math.floor((disponible / CANVAS) * 1e4) / 1e4)
         : "1";
   };
 
@@ -400,16 +443,209 @@ function syncNavActive() {
   });
 }
 
-/* ---------- CTA del hero según la sesión ---------- */
-function initHeroCta() {
-  const cta = $("#hero-cta");
-  if (!cta || !session.on) return;
-  cta.href = "reserva-mascota.html";
-  $("span", cta).textContent = "Agendar cita";
+/* ---------- Máscaras literales (plantilla visible; se guarda sin máscara) ---------- */
+const Masks = {
+  patterns: {
+    "sv-phone": "____-____",
+    card: "____ ____ ____ ____",
+    exp: "__/__",
+    cvc: "___",
+  },
+
+  digits(v, max) {
+    const d = String(v || "").replace(/\D/g, "");
+    return max != null ? d.slice(0, max) : d;
+  },
+
+  slotCount(pattern) {
+    return (pattern.match(/_/g) || []).length;
+  },
+
+  /** Rellena la plantilla con dígitos; el resto queda en _ */
+  paint(pattern, rawDigits) {
+    const digits = this.digits(rawDigits);
+    let i = 0;
+    return pattern
+      .split("")
+      .map((ch) => {
+        if (ch !== "_") return ch;
+        if (i < digits.length) return digits[i++];
+        return "_";
+      })
+      .join("");
+  },
+
+  /** Posición del cursor tras N dígitos en la plantilla */
+  caretAfterDigits(pattern, digitCount) {
+    if (digitCount <= 0) return 0;
+    let seen = 0;
+    for (let i = 0; i < pattern.length; i++) {
+      if (pattern[i] === "_") {
+        seen++;
+        if (seen === digitCount) return i + 1;
+      }
+    }
+    return pattern.length;
+  },
+
+  formatSvPhone(v) {
+    return this.paint(this.patterns["sv-phone"], v);
+  },
+
+  displaySvPhone(v) {
+    const d = this.digits(v, 8);
+    if (!d) return "";
+    // Solo dígitos + guion SV, sin guiones bajos
+    const local =
+      d.length <= 4 ? d : `${d.slice(0, 4)}-${d.slice(4)}`;
+    return `+503 ${local}`;
+  },
+
+  formatCard(v) {
+    return this.paint(this.patterns.card, v);
+  },
+
+  formatExp(v) {
+    return this.paint(this.patterns.exp, v);
+  },
+
+  formatCvc(v) {
+    return this.paint(this.patterns.cvc, v);
+  },
+
+  isComplete(type, v) {
+    const pattern = this.patterns[type];
+    if (!pattern) return false;
+    return this.digits(v).length >= this.slotCount(pattern);
+  },
+
+  apply(input) {
+    if (!input) return;
+    const type = input.dataset.mask;
+    const pattern = this.patterns[type];
+    if (!pattern) return;
+
+    // Re-aplicar de forma segura
+    if (input.dataset.maskBound === "1") return;
+    input.dataset.maskBound = "1";
+    input.classList.add("has-mask");
+    input.maxLength = pattern.length;
+    input.placeholder = pattern;
+    input.spellcheck = false;
+
+    const slots = this.slotCount(pattern);
+    const self = this;
+
+    const render = (raw, preferCaretDigits) => {
+      const digs = self.digits(raw, slots);
+      const painted = self.paint(pattern, digs);
+      input.value = painted;
+      const caret = self.caretAfterDigits(
+        pattern,
+        preferCaretDigits != null ? preferCaretDigits : digs.length
+      );
+      requestAnimationFrame(() => {
+        try {
+          input.setSelectionRange(caret, caret);
+        } catch (_) {}
+      });
+      return digs;
+    };
+
+    // Mostrar máscara literal de inmediato
+    render(input.value);
+
+    input.addEventListener("focus", () => {
+      render(input.value);
+      if (!self.digits(input.value).length) {
+        try {
+          input.setSelectionRange(0, 0);
+        } catch (_) {}
+      }
+    });
+
+    input.addEventListener("click", () => {
+      const digs = self.digits(input.value).length;
+      const caret = self.caretAfterDigits(pattern, digs);
+      try {
+        input.setSelectionRange(caret, caret);
+      } catch (_) {}
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.key === "Tab" || e.key === "ArrowLeft" || e.key === "ArrowRight" || e.key === "Home" || e.key === "End") {
+        return;
+      }
+      if (e.key === "Backspace" || e.key === "Delete") {
+        e.preventDefault();
+        const digs = self.digits(input.value).slice(0, -1);
+        render(digs);
+        return;
+      }
+      if (/^\d$/.test(e.key)) {
+        e.preventDefault();
+        const digs = self.digits(input.value);
+        if (digs.length >= slots) return;
+        render(digs + e.key);
+        return;
+      }
+      // Bloquear letras y símbolos
+      if (e.key.length === 1) e.preventDefault();
+    });
+
+    input.addEventListener("input", () => {
+      // Fallback (móvil / autocompletado)
+      render(input.value);
+    });
+
+    input.addEventListener("blur", () => {
+      const digs = self.digits(input.value, slots);
+      input.value = digs.length ? self.paint(pattern, digs) : pattern;
+    });
+
+    input.addEventListener("paste", (e) => {
+      e.preventDefault();
+      const text = (e.clipboardData || window.clipboardData).getData("text") || "";
+      render(text);
+    });
+  },
+};
+
+function initMasks() {
+  document.querySelectorAll("[data-mask]").forEach((el) => Masks.apply(el));
+}
+
+window.Masks = Masks;
+window.initMasks = initMasks;
+
+/* Máscaras lo antes posible (no depender de Store ni del resto del boot) */
+function bootMasksEarly() {
+  try {
+    initMasks();
+  } catch (err) {
+    console.error("Máscaras:", err);
+  }
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", bootMasksEarly);
+} else {
+  bootMasksEarly();
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-  if (window.Store) await Store.init();
+  // Zoom primero: si falla algo después, el layout igual escala como en Vercel
+  try {
+    initFixedWidth();
+  } catch (err) {
+    console.error("initFixedWidth:", err);
+  }
+  bootMasksEarly();
+  try {
+    if (window.Store) await Store.init();
+  } catch (err) {
+    console.error("Store.init:", err);
+  }
   // Migración suave: sesión vieja sin auth → limpiar
   if (localStorage.getItem("cathome_session") === "1" && window.Store && !Store.getAuth()) {
     localStorage.removeItem("cathome_session");
@@ -424,6 +660,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   initFaq();
   initGuards();
   initHeroCta();
-  initFixedWidth();
+  bootMasksEarly();
+  try {
+    initFixedWidth();
+  } catch (err) {
+    console.error("initFixedWidth:", err);
+  }
 });
 

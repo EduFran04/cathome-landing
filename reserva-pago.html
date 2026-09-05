@@ -54,15 +54,15 @@
           <div class="card-fields form-grid">
             <div class="field full">
               <label for="cardNumber">Número de tarjeta</label>
-              <input id="cardNumber" type="text" placeholder="ACCT-000035" inputmode="numeric">
+              <input id="cardNumber" type="text" data-mask="card" inputmode="numeric" autocomplete="cc-number">
             </div>
             <div class="field">
               <label for="cardExp">Fecha de expiración</label>
-              <input id="cardExp" type="text" placeholder="MM / AA">
+              <input id="cardExp" type="text" data-mask="exp" inputmode="numeric" autocomplete="cc-exp">
             </div>
             <div class="field">
               <label for="cardCvc">Código de seguridad</label>
-              <input id="cardCvc" type="text" placeholder="CVC">
+              <input id="cardCvc" type="text" data-mask="cvc" inputmode="numeric" autocomplete="cc-csc">
             </div>
             <div class="field full">
               <label for="cardHolder">Nombre del titular</label>

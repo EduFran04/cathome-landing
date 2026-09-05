@@ -51,6 +51,20 @@ const Booking = (() => {
     let pets = Store.petsOf(user.id);
     let selected = draft.petId || (pets[0] && pets[0].id);
 
+    // Invitado sin mascotas: ir directo a cargar datos
+    if (Store.isGuest() && !pets.length) {
+      const svc = Store.defaultService();
+      Store.setDraft({
+        petId: null,
+        newPet: true,
+        serviceId: svc.id,
+        serviceName: svc.name,
+        price: svc.price,
+      });
+      redirect("reserva-datos.html");
+      return;
+    }
+
     function render() {
       pets = Store.petsOf(user.id);
       if (!selected && pets[0]) selected = pets[0].id;
@@ -141,7 +155,7 @@ const Booking = (() => {
     if ($("ownerName")) $("ownerName").value = user.name || "";
     if ($("ownerPhone"))
       $("ownerPhone").value = user.phone
-        ? `+503 ${user.phone.slice(0, 4)} ${user.phone.slice(4)}`
+        ? (window.Masks ? Masks.formatSvPhone(user.phone) : user.phone)
         : "";
     if ($("ownerEmail")) $("ownerEmail").value = user.email || "";
     if ($("ownerAddress")) $("ownerAddress").value = user.address || "";
@@ -289,7 +303,11 @@ const Booking = (() => {
       el.textContent = user.name;
     });
     root.querySelectorAll("[data-sum='owner-meta']").forEach((el) => {
-      const phone = user.phone ? `+503 ${user.phone}` : "";
+      const phone = user.phone
+        ? window.Masks
+          ? Masks.displaySvPhone(user.phone)
+          : `+503 ${user.phone}`
+        : "";
       el.textContent = [phone, user.email].filter(Boolean).join(" · ");
     });
   }
@@ -327,11 +345,11 @@ const Booking = (() => {
       const user = Store.currentUser();
       const d = Store.getDraft();
       if (method === "card") {
-        const num = document.getElementById("cardNumber")?.value.replace(/\s/g, "") || "";
-        const exp = document.getElementById("cardExp")?.value || "";
-        const cvc = document.getElementById("cardCvc")?.value || "";
+        const num = Masks.digits(document.getElementById("cardNumber")?.value || "");
+        const exp = Masks.digits(document.getElementById("cardExp")?.value || "");
+        const cvc = Masks.digits(document.getElementById("cardCvc")?.value || "");
         const holder = document.getElementById("cardHolder")?.value || "";
-        if (num.length < 12 || !exp || cvc.length < 3 || !holder.trim()) {
+        if (num.length < 12 || exp.length < 4 || cvc.length < 3 || !holder.trim()) {
           toast("Completa los datos de la tarjeta (simulación)");
           return;
         }
@@ -370,9 +388,28 @@ const Booking = (() => {
     }
     const user = Store.currentUser();
     const pet = Store.getPet(appt.petId);
+    const guest = Store.isGuest();
 
     const code = document.getElementById("apptCode");
     if (code) code.textContent = appt.code;
+
+    const verifyMsg = document.getElementById("verifyCodeMsg");
+    if (verifyMsg) {
+      verifyMsg.hidden = false;
+      verifyMsg.textContent = guest
+        ? "Guarda este código: en la clínica lo validan en el local. Como invitado no puedes ver Mis citas."
+        : "Guarda este código: en la clínica lo validan en el local para confirmar tu cita.";
+    }
+
+    const misCitasBtn = document.getElementById("btnMisCitas");
+    if (misCitasBtn) {
+      if (guest) {
+        misCitasBtn.removeAttribute("data-needs-account");
+        misCitasBtn.href = "login.html?next=mis-citas.html";
+        misCitasBtn.innerHTML =
+          'Iniciar sesión <svg class="ic"><use href="#i-arrow-r"/></svg>';
+      }
+    }
 
     const host = document.getElementById("exitoDetails");
     if (host && pet && user) {
@@ -532,7 +569,10 @@ const Booking = (() => {
 
   async function boot() {
     await Store.init();
-    if (document.body.hasAttribute("data-requires-auth") && !Store.isLoggedIn()) {
+    if (document.body.hasAttribute("data-requires-account") && !Store.isLoggedIn()) {
+      return;
+    }
+    if (document.body.hasAttribute("data-requires-auth") && !Store.canBook()) {
       return;
     }
     const step = document.body.dataset.booking;

@@ -346,7 +346,19 @@ const Store = (() => {
     return getDb().users.find((u) => u.id === auth.userId) || null;
   }
 
+  /** Cuenta real (teléfono / correo / redes). El invitado no cuenta. */
   function isLoggedIn() {
+    const auth = getAuth();
+    if (!auth?.userId || auth.guest) return false;
+    return !!currentUser();
+  }
+
+  function isGuest() {
+    return !!getAuth()?.guest;
+  }
+
+  /** Puede agendar: sesión real o modo invitado. */
+  function canBook() {
     return !!currentUser();
   }
 
@@ -361,6 +373,27 @@ const Store = (() => {
     setAuth({
       userId: user.id,
       provider: provider || user.provider || "phone",
+      at: new Date().toISOString(),
+    });
+    return user;
+  }
+
+  /** Modo invitado: puede agendar, no ve Mis citas ni quita Iniciar sesión. */
+  function startGuest() {
+    const existing = getAuth();
+    if (existing?.guest && existing.userId && currentUser()) {
+      return currentUser();
+    }
+    const user = registerUser({
+      name: "Invitado",
+      phone: "",
+      email: "",
+      provider: "guest",
+    });
+    setAuth({
+      userId: user.id,
+      guest: true,
+      provider: "guest",
       at: new Date().toISOString(),
     });
     return user;
@@ -549,7 +582,10 @@ const Store = (() => {
     getAuth,
     currentUser,
     isLoggedIn,
+    isGuest,
+    canBook,
     loginAs,
+    startGuest,
     logout,
     findUserByPhone,
     findUserByEmail,

@@ -38,7 +38,7 @@
             Código de cita
           </div>
           <div class="code" id="apptCode">—</div>
-          <p class="hint">Guarda este comprobante para futuras consultas.</p>
+          <p class="hint" id="verifyCodeMsg">Guarda este código: en la clínica lo validan en el local.</p>
         </div>
         <div class="ticket-qr">
           <svg class="qr" viewBox="0 0 120 120" role="img" aria-label="Código QR de la cita">
@@ -124,11 +124,16 @@
             <li>Llegar con 10 minutos de anticipación.</li>
             <li>Si tu gato está en tratamiento, informa al personal.</li>
             <li>Te recomendamos traerlo en un transportador seguro.</li>
-            <li>Para cualquier cambio, comunícate al +503 6106 0204.</li>
+            <li>Para cualquier cambio, comunícate al +503 6106-0204.</li>
           </ul>
         </div>
 
         <div class="secure-band" style="margin-top:14px">
+          <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-shield"/></svg>
+          <span><b>Código de verificación.</b> Preséntalo en recepción para validar tu cita en el local.</span>
+        </div>
+
+        <div class="secure-band" style="margin-top:10px">
           <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-shield"/></svg>
           <span><b>Tu información está segura.</b> Utilizamos protocolos de seguridad para proteger tus datos.</span>
         </div>
@@ -139,7 +144,7 @@
       <a class="btn-outline-green" href="index.html">
         <svg class="ic"><use href="#i-arrow-l"/></svg> Volver al inicio
       </a>
-      <a class="btn btn-green" href="mis-citas.html">
+      <a class="btn btn-green" href="mis-citas.html" id="btnMisCitas" data-needs-account>
         Ver mis citas <svg class="ic"><use href="#i-arrow-r"/></svg>
       </a>
     </div>
