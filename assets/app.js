@@ -330,6 +330,25 @@ function initFaq() {
   );
 }
 
+/* ---------- CTA del hero según la sesión ---------- */
+function initHeroCta() {
+  const cta = $("#hero-cta");
+  if (!cta) return;
+  const label = $("span", cta);
+  // Cuenta real → Agendar cita. Invitado / sin sesión → Iniciar sesión
+  if (session.on) {
+    cta.href = "reserva-mascota.html";
+    if (label) label.textContent = "Agendar cita";
+    const use = cta.querySelector("svg.ic use");
+    if (use) use.setAttribute("href", "#i-calendar");
+  } else {
+    cta.href = "login.html";
+    if (label) label.textContent = "Iniciar sesión";
+    const use = cta.querySelector("svg.ic use");
+    if (use) use.setAttribute("href", "#i-user");
+  }
+}
+
 /* ---------- Enlaces que exigen sesión ---------- */
 function initGuards() {
   $$("[data-needs-login]").forEach((el) =>
@@ -676,6 +695,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   renderFooter();
   initFaq();
   initGuards();
+  initHeroCta();
   bootMasksEarly();
   try {
     initFixedWidth();
