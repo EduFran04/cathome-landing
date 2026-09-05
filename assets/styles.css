@@ -2784,3 +2784,49 @@ body.is-mobile .citas-hero .cta { width: 100%; justify-content: center; }
 body.is-mobile .citas-tabs { width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); }
 body.is-mobile .citas-card .body { grid-template-columns: 1fr; }
 body.is-mobile .citas-card .price-col { text-align: left; }
+
+.demo-accounts {
+  margin-top: 14px;
+  text-align: left;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.demo-accounts-title {
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.demo-account-list {
+  display: grid;
+  gap: 8px;
+}
+.demo-account {
+  width: 100%;
+  text-align: left;
+  border: 1.5px solid var(--line);
+  background: var(--green-soft-2);
+  border-radius: 12px;
+  padding: 10px 12px;
+  cursor: pointer;
+  display: grid;
+  gap: 2px;
+}
+.demo-account:hover {
+  border-color: var(--green-mid);
+  background: #fff;
+}
+.demo-account strong {
+  color: var(--green-deep);
+  font-size: .88rem;
+}
+.demo-account span {
+  font-size: .72rem;
+  color: var(--muted);
+}
+.demo-account small {
+  font-size: .68rem;
+  color: var(--green-mid);
+  font-weight: 600;
+}

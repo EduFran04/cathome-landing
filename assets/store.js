@@ -41,6 +41,56 @@ const Store = (() => {
         provider: "facebook",
         createdAt: "2026-02-15T10:00:00.000Z",
       },
+      {
+        id: "u_pamela",
+        name: "Pamela",
+        phone: "70110011",
+        email: "pamela@cathome.demo",
+        password: "pamela26",
+        address: "San Salvador",
+        provider: "email",
+        createdAt: "2026-03-01T10:00:00.000Z",
+      },
+      {
+        id: "u_valerie",
+        name: "Valerie",
+        phone: "70120022",
+        email: "valerie@cathome.demo",
+        password: "valerie26",
+        address: "Santa Tecla",
+        provider: "email",
+        createdAt: "2026-03-02T10:00:00.000Z",
+      },
+      {
+        id: "u_ricardo",
+        name: "Ricardo",
+        phone: "70130033",
+        email: "ricardo@cathome.demo",
+        password: "ricardo26",
+        address: "Antiguo Cuscatlán",
+        provider: "email",
+        createdAt: "2026-03-03T10:00:00.000Z",
+      },
+      {
+        id: "u_paola",
+        name: "Paola",
+        phone: "70140044",
+        email: "paola@cathome.demo",
+        password: "paola26",
+        address: "Soyapango",
+        provider: "email",
+        createdAt: "2026-03-04T10:00:00.000Z",
+      },
+      {
+        id: "u_walter",
+        name: "Walter",
+        phone: "70150055",
+        email: "walter@cathome.demo",
+        password: "walter26",
+        address: "Mejicanos",
+        provider: "email",
+        createdAt: "2026-03-05T10:00:00.000Z",
+      },
     ],
     pets: [
       {
@@ -93,6 +143,71 @@ const Store = (() => {
         weight: "3.8 kg",
         photo: "assets/gatos/GATO10.png",
         photoFallback: "assets/gatos/GATO4.png",
+        notes: "",
+      },
+      {
+        id: "p_michi_pamela",
+        userId: "u_pamela",
+        name: "Michi",
+        species: "Gato",
+        sex: "Hembra",
+        age: "2 años",
+        breed: "Mestizo",
+        weight: "3.9 kg",
+        photo: "assets/gatos/GATO7.png",
+        photoFallback: "assets/gatos/GATO1.png",
+        notes: "",
+      },
+      {
+        id: "p_coco_valerie",
+        userId: "u_valerie",
+        name: "Coco",
+        species: "Gato",
+        sex: "Macho",
+        age: "3 años",
+        breed: "Mestizo",
+        weight: "4.5 kg",
+        photo: "assets/gatos/GATO8.png",
+        photoFallback: "assets/gatos/GATO2.png",
+        notes: "",
+      },
+      {
+        id: "p_bolt_ricardo",
+        userId: "u_ricardo",
+        name: "Bolt",
+        species: "Gato",
+        sex: "Macho",
+        age: "1 año",
+        breed: "Mestizo",
+        weight: "4.0 kg",
+        photo: "assets/gatos/GATO9.png",
+        photoFallback: "assets/gatos/GATO3.png",
+        notes: "",
+      },
+      {
+        id: "p_lila_paola",
+        userId: "u_paola",
+        name: "Lila",
+        species: "Gato",
+        sex: "Hembra",
+        age: "2 años",
+        breed: "Siamés",
+        weight: "3.4 kg",
+        photo: "assets/gatos/GATO10.png",
+        photoFallback: "assets/gatos/GATO4.png",
+        notes: "",
+      },
+      {
+        id: "p_tigre_walter",
+        userId: "u_walter",
+        name: "Tigre",
+        species: "Gato",
+        sex: "Macho",
+        age: "5 años",
+        breed: "Mestizo",
+        weight: "5.1 kg",
+        photo: "assets/gatos/GATO6.png",
+        photoFallback: "assets/gatos/GATO3.png",
         notes: "",
       },
     ],
@@ -150,9 +265,46 @@ const Store = (() => {
         if (!db) db = clone(SEED);
         writeDb(db);
       }
-      return db;
+      mergeSeed(db);
+      return getDb();
     })();
     return ready;
+  }
+
+  /** Asegura usuarios/mascotas nuevos del seed aunque ya exista localStorage */
+  function mergeSeed(db) {
+    let changed = false;
+    for (const u of SEED.users) {
+      const exists = db.users.some(
+        (x) => x.id === u.id || (u.email && x.email === u.email)
+      );
+      if (!exists) {
+        db.users.push(clone(u));
+        changed = true;
+      } else {
+        const i = db.users.findIndex(
+          (x) => x.id === u.id || (u.email && x.email === u.email)
+        );
+        if (i >= 0 && u.password && db.users[i].password !== u.password) {
+          db.users[i] = {
+            ...db.users[i],
+            name: u.name,
+            phone: u.phone || db.users[i].phone,
+            email: u.email,
+            password: u.password,
+            provider: u.provider || db.users[i].provider,
+          };
+          changed = true;
+        }
+      }
+    }
+    for (const p of SEED.pets) {
+      if (!db.pets.some((x) => x.id === p.id)) {
+        db.pets.push(clone(p));
+        changed = true;
+      }
+    }
+    if (changed) writeDb(db);
   }
 
   function resetDemo() {

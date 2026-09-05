@@ -69,11 +69,20 @@
         <span class="label">Continuar con Google</span>
       </button>
 
+      <button type="button" class="social-btn" id="btn-email-mode">
+        <svg class="brandmark" viewBox="0 0 32 32" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="#14523b"/>
+          <path d="M7 11.2h18v11.2H7V11.2Z" fill="none" stroke="#fff" stroke-width="1.8"/>
+          <path d="m7.6 11.8 8.4 6.2 8.4-6.2" fill="none" stroke="#fff" stroke-width="1.8"/>
+        </svg>
+        <span class="label">Continuar con correo</span>
+      </button>
+
       <div class="or-divider">o continúa con</div>
 
       <div class="login-tabs" role="tablist">
         <button type="button" class="login-tab on" data-tab="phone">Teléfono</button>
-        <button type="button" class="login-tab" data-tab="email">Correo</button>
+        <button type="button" class="login-tab" data-tab="email" id="tab-email">Correo</button>
       </div>
 
       <div id="panel-phone" class="login-panel">
@@ -123,10 +132,37 @@
         <svg class="ic" style="width:15px;height:15px"><use href="#i-lock"/></svg>
         Tus datos están protegidos
       </p>
-      <p class="demo-hint">
-        Demo teléfono: <strong>7000-0000</strong><br>
-        Demo correo: <strong>maria@cathome.demo</strong> / <strong>demo123</strong>
-      </p>
+
+      <div class="demo-accounts">
+        <p class="demo-accounts-title">Cuentas demo (toca para autocompletar)</p>
+        <div class="demo-account-list" id="demoAccounts">
+          <button type="button" class="demo-account" data-email="pamela@cathome.demo" data-pass="pamela26" data-phone="70110011">
+            <strong>Pamela</strong>
+            <span>pamela@cathome.demo · pamela26</span>
+            <small>+503 7011-0011</small>
+          </button>
+          <button type="button" class="demo-account" data-email="valerie@cathome.demo" data-pass="valerie26" data-phone="70120022">
+            <strong>Valerie</strong>
+            <span>valerie@cathome.demo · valerie26</span>
+            <small>+503 7012-0022</small>
+          </button>
+          <button type="button" class="demo-account" data-email="ricardo@cathome.demo" data-pass="ricardo26" data-phone="70130033">
+            <strong>Ricardo</strong>
+            <span>ricardo@cathome.demo · ricardo26</span>
+            <small>+503 7013-0033</small>
+          </button>
+          <button type="button" class="demo-account" data-email="paola@cathome.demo" data-pass="paola26" data-phone="70140044">
+            <strong>Paola</strong>
+            <span>paola@cathome.demo · paola26</span>
+            <small>+503 7014-0044</small>
+          </button>
+          <button type="button" class="demo-account" data-email="walter@cathome.demo" data-pass="walter26" data-phone="70150055">
+            <strong>Walter</strong>
+            <span>walter@cathome.demo · walter26</span>
+            <small>+503 7015-0055</small>
+          </button>
+        </div>
+      </div>
     </form>
   </section>
 </main>
@@ -154,13 +190,35 @@
   const overlayText = document.getElementById("authOverlayText");
   let mode = "phone";
 
+  function setMode(next) {
+    mode = next;
+    document.querySelectorAll(".login-tab").forEach((t) => {
+      const on = t.dataset.tab === next;
+      t.classList.toggle("on", on);
+    });
+    document.getElementById("panel-phone").hidden = next !== "phone";
+    document.getElementById("panel-email").hidden = next !== "email";
+    err.textContent = "";
+  }
+
   document.querySelectorAll(".login-tab").forEach((tab) => {
-    tab.addEventListener("click", () => {
-      mode = tab.dataset.tab;
-      document.querySelectorAll(".login-tab").forEach((t) => t.classList.toggle("on", t === tab));
-      document.getElementById("panel-phone").hidden = mode !== "phone";
-      document.getElementById("panel-email").hidden = mode !== "email";
+    tab.addEventListener("click", () => setMode(tab.dataset.tab));
+  });
+
+  document.getElementById("btn-email-mode").addEventListener("click", () => {
+    setMode("email");
+    document.getElementById("email").focus();
+  });
+
+  document.querySelectorAll("#demoAccounts .demo-account").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setMode("email");
+      document.getElementById("email").value = btn.dataset.email || "";
+      document.getElementById("password").value = btn.dataset.pass || "";
+      document.getElementById("phone").value = btn.dataset.phone || "";
+      document.getElementById("terms").checked = true;
       err.textContent = "";
+      toast(`Cuenta de ${btn.querySelector("strong").textContent} lista · pulsa Continuar`);
     });
   });
 
