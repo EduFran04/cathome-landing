@@ -212,6 +212,7 @@ function renderHeader() {
          <svg class="ic"><use href="#i-user"/></svg> Iniciar sesión
        </a>`;
 
+  // Solo la barra en el header (el drawer va al body: backdrop-filter lo recortaba)
   host.innerHTML = `<div class="bar">
     ${brandBlock()}
     <nav class="main-nav desk-nav" aria-label="Principal">${links}</nav>
@@ -219,18 +220,26 @@ function renderHeader() {
     <button type="button" class="burger" aria-label="Abrir menú" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-  </div>
+  </div>`;
+
+  let portal = document.getElementById("nav-portal");
+  if (!portal) {
+    portal = document.createElement("div");
+    portal.id = "nav-portal";
+    document.body.appendChild(portal);
+  }
+  portal.innerHTML = `
   <div class="nav-backdrop" data-nav-close hidden></div>
   <nav class="nav-drawer" aria-label="Menú">
     <div class="nav-drawer-head">
       <span>Menú</span>
       <button type="button" class="nav-close" data-nav-close aria-label="Cerrar">×</button>
     </div>
-    ${links}
+    <div class="nav-drawer-links">${links}</div>
     <div class="nav-drawer-cta">${right}</div>
   </nav>`;
 
-  $$("[data-logout]", host).forEach((b) =>
+  $$("[data-logout]").forEach((b) =>
     b.addEventListener("click", () => {
       session.end();
       toast("Sesión cerrada");
@@ -411,7 +420,7 @@ function initMobileNav() {
     document.body.classList.toggle("nav-open", open);
     burger.setAttribute("aria-expanded", open ? "true" : "false");
     burger.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
-    const backdrop = $(".nav-backdrop", header);
+    const backdrop = $(".nav-backdrop");
     if (backdrop) backdrop.hidden = !open;
   };
 
@@ -419,11 +428,11 @@ function initMobileNav() {
     setOpen(!document.body.classList.contains("nav-open"));
   });
 
-  header.querySelectorAll("[data-nav-close]").forEach((el) =>
+  document.querySelectorAll("[data-nav-close]").forEach((el) =>
     el.addEventListener("click", () => setOpen(false))
   );
 
-  header.querySelectorAll(".nav-drawer a").forEach((a) =>
+  document.querySelectorAll(".nav-drawer a").forEach((a) =>
     a.addEventListener("click", () => setOpen(false))
   );
 
