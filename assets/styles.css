@@ -670,7 +670,7 @@ body.nav-open { overflow: hidden; }
   width: 214px; max-width: none;
   transform: translate(-50%, -50%);
 }
-.login-stack { display: grid; gap: 12px; text-align: left; }
+.login-stack { display: grid; gap: 12px; text-align: left; min-width: 0; width: 100%; }
 .social-btn {
   width: 100%; background: #fff; border: 1px solid #e7e3dc;
   border-radius: 14px; padding: 14px 18px; cursor: pointer;
@@ -678,6 +678,8 @@ body.nav-open { overflow: hidden; }
   font-size: .95rem; font-weight: 500; color: var(--ink);
   box-shadow: 0 3px 10px rgba(0,0,0,.05);
   transition: box-shadow .16s ease, transform .16s ease;
+  min-width: 0;
+  box-sizing: border-box;
 }
 .social-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
 .social-btn .brandmark { width: 26px; height: 26px; flex: none; }
@@ -690,15 +692,16 @@ body.nav-open { overflow: hidden; }
 .phone-field {
   display: flex; align-items: stretch;
   background: #fff; border: 1px solid #e7e3dc; border-radius: 14px; overflow: hidden;
+  width: 100%; min-width: 0;
 }
 .phone-field:focus-within { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(244,99,58,.14); }
 .phone-field .cc {
   display: flex; align-items: center; gap: 7px;
   padding: 0 14px; border-right: 1px solid #eceae4;
-  font-size: .92rem; font-weight: 500;
+  font-size: .92rem; font-weight: 500; flex: none;
 }
 .phone-field .flag { width: 26px; height: 18px; border-radius: 3px; overflow: hidden; flex: none; }
-.phone-field input { flex: 1; border: none; outline: none; padding: 15px 14px; background: none; }
+.phone-field input { flex: 1 1 0; min-width: 0; border: none; outline: none; padding: 15px 14px; background: none; }
 .phone-field input::placeholder { color: #9aa79f; }
 .terms-row {
   display: flex; align-items: center; gap: 10px;
@@ -1629,17 +1632,23 @@ body[data-density="reseÃ±as"] .t-item .date { font-size: calc(var(--design) * 
 
 
 /* Densidad login: pantalla centrada normal (sin canvas 1400) */
+body[data-density="login"] {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
 body[data-density="login"] .login-page {
   min-height: 100vh;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   padding: 40px 24px 48px;
+  overflow-x: hidden;
 }
 body[data-density="login"] .login-card {
   width: min(430px, 100%);
-  max-width: 430px;
+  max-width: 100%;
   margin-inline: auto;
+  box-sizing: border-box;
 }
 
 
@@ -2292,8 +2301,40 @@ body.is-mobile .trust-bar {
   display: grid; place-items: center; text-align: center;
   color: var(--green-mid); font-size: .72rem; font-weight: 600;
   cursor: pointer; margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  font-family: inherit;
 }
 .photo-add .ic { width: 28px; height: 28px; margin: 0 auto 4px; }
+.photo-add [data-photo-placeholder] {
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  line-height: 1.25;
+}
+.photo-add [data-photo-preview] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-add.has-photo {
+  border-style: solid;
+  border-color: var(--orange);
+}
+.photo-add.has-photo::after {
+  content: "Cambiar";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 6px 4px 8px;
+  background: linear-gradient(transparent, rgba(14, 59, 42, .72));
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
 .sex-row { display: flex; gap: 18px; align-items: center; padding-top: 8px; }
 .sex-row label {
   display: inline-flex; align-items: center; gap: 8px;
@@ -2301,6 +2342,96 @@ body.is-mobile .trust-bar {
 }
 .datos-layout {
   display: grid; grid-template-columns: 140px 1fr; gap: 20px; align-items: start;
+}
+.photo-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.photo-opt {
+  appearance: none; border: 2px solid var(--line);
+  background: #fff; border-radius: 14px; padding: 0;
+  overflow: hidden; cursor: pointer; aspect-ratio: 1;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+}
+.photo-opt img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.photo-opt:hover { border-color: var(--sage); transform: translateY(-1px); }
+.photo-opt.on {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(244, 99, 58, .18);
+}
+
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: 20px 14px;
+}
+.photo-modal[hidden] { display: none !important; }
+.photo-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 40, 28, .48);
+}
+.photo-modal-card {
+  position: relative;
+  z-index: 1;
+  width: min(440px, 100%);
+  max-height: min(88vh, 640px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 22px;
+  padding: 20px 18px 16px;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, .22);
+}
+.photo-modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.photo-modal-head h3 {
+  font-size: 1.1rem;
+  color: var(--green-deep);
+  font-weight: 700;
+}
+.photo-modal-head p {
+  margin-top: 4px;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.photo-modal-x {
+  appearance: none;
+  border: none;
+  background: var(--green-soft-2);
+  color: var(--green-deep);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  flex: none;
+}
+.photo-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+body.photo-modal-open { overflow: hidden; }
+
+@media (max-width: 760px) {
+  .photo-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .photo-modal-actions .btn { flex: 1; justify-content: center; }
+  .datos-layout { grid-template-columns: 1fr; justify-items: center; }
+  .datos-layout .form-grid { width: 100%; }
 }
 
 /* Fecha */
@@ -2613,13 +2744,14 @@ body.is-mobile .ticket-qr { max-width: none; }
 
 /* Login tabs + overlay social */
 .login-tabs {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px;
   background: var(--green-soft-2); border-radius: 12px; padding: 4px;
+  width: 100%; max-width: 100%; box-sizing: border-box;
 }
 .login-tab {
   border: none; background: transparent; border-radius: 10px;
   padding: 10px; font-weight: 600; font-size: .84rem; cursor: pointer;
-  color: var(--muted);
+  color: var(--muted); min-width: 0;
 }
 .login-tab.on { background: #fff; color: var(--green-deep); box-shadow: var(--shadow-sm); }
 .login-panel .field label { font-size: .78rem; font-weight: 600; color: var(--green-deep); margin-bottom: 6px; display: block; }
@@ -2810,6 +2942,145 @@ body.is-mobile .citas-tabs { width: 100%; display: grid; grid-template-columns: 
 body.is-mobile .citas-card .body { grid-template-columns: 1fr; }
 body.is-mobile .citas-card .price-col { text-align: left; }
 
+/* ============================================================
+   MI PERFIL — datos del dueño + mascotas (fuera del flujo 1–4)
+   ============================================================ */
+.perfil-page { padding-bottom: 40px; }
+.perfil-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.perfil-owner-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--line);
+}
+.perfil-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  color: var(--green-mid);
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.perfil-avatar .ic { width: 28px; height: 28px; }
+.perfil-owner-meta strong {
+  display: block;
+  font-size: 1.15rem;
+  color: var(--green-deep);
+}
+.perfil-owner-meta span {
+  display: inline-block;
+  margin-top: 4px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--green-mid);
+}
+.perfil-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+.book-panel .panel-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.book-panel .panel-head > div:nth-child(2) { flex: 1; min-width: 180px; }
+.book-panel .panel-head > .btn { margin-left: auto; flex: none; }
+
+.perfil-pet-grid {
+  display: grid;
+  gap: 12px;
+}
+.perfil-pet-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.perfil-pet-card:last-child { border-bottom: none; padding-bottom: 0; }
+.perfil-pet-card:first-child { padding-top: 0; }
+.perfil-pet-card img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--sage-pale);
+  flex: none;
+}
+.perfil-pet-card .info strong {
+  display: block;
+  color: var(--green-deep);
+  font-size: 1rem;
+}
+.perfil-pet-card .info small {
+  color: var(--muted);
+  font-size: .78rem;
+}
+.perfil-pet-card .tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--green);
+  background: var(--green-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.perfil-pet-card .note {
+  margin-top: 8px;
+  font-size: .8rem;
+  color: var(--muted);
+  max-width: 42ch;
+}
+.perfil-pet-card .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.perfil-photo-preview {
+  position: relative;
+  overflow: hidden;
+}
+.perfil-photo-preview img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body.is-mobile .perfil-hero-actions { width: 100%; }
+body.is-mobile .perfil-hero-actions .btn { flex: 1; justify-content: center; }
+body.is-mobile .perfil-pet-card {
+  grid-template-columns: auto 1fr;
+}
+body.is-mobile .perfil-pet-card .actions {
+  grid-column: 1 / -1;
+  justify-content: stretch;
+}
+body.is-mobile .perfil-pet-card .actions .btn { flex: 1; justify-content: center; }
+body.is-mobile .book-panel .panel-head > .btn {
+  margin-left: 0;
+  width: 100%;
+  justify-content: center;
+}
+
 .demo-accounts {
   margin-top: 14px;
   text-align: left;
@@ -2877,4 +3148,245 @@ input.has-mask::placeholder {
   max-width: 260px;
   margin-inline: auto;
 }
-/* sin reglas de canvas que rompan el header en desktop/móvil */
+
+/* ============================================================
+   MÓVIL — overflow y login (arreglo global)
+   Aplica por media query (sin depender solo de .is-mobile)
+   ============================================================ */
+@media (max-width: 760px) {
+  html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  /* Header: CTAs en el menú hamburguesa (evita botones vacíos) */
+  body.is-mobile .header-cta,
+  body .site-header .header-cta {
+    display: none !important;
+  }
+
+  /* Login: que quepa entero en el viewport */
+  body[data-density="login"],
+  body[data-density="login"] .login-page {
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    overflow-x: hidden !important;
+    padding: 16px 12px 28px !important;
+  }
+  body[data-density="login"] .login-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 20px 14px 22px !important;
+    border-radius: 22px !important;
+    overflow: hidden;
+  }
+  body[data-density="login"] .login-card .brand-logo-only {
+    display: none; /* evita logo duplicado; queda el del anillo */
+  }
+  body[data-density="login"] .login-card h1 {
+    font-size: 1.28rem !important;
+    margin-top: 0 !important;
+    padding-inline: 4px;
+  }
+  body[data-density="login"] .login-card .welcome-sub {
+    font-size: .88rem;
+    flex-wrap: wrap;
+  }
+  body[data-density="login"] .logo-ring {
+    width: 128px !important;
+    height: 128px !important;
+    margin: 14px auto 18px !important;
+  }
+  body[data-density="login"] .logo-ring .ring-img {
+    width: 112px !important;
+    height: 112px !important;
+  }
+  body[data-density="login"] .logo-ring .ring-img img {
+    width: 158px !important;
+  }
+  body[data-density="login"] .login-stack {
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+  }
+  body[data-density="login"] .social-btn {
+    min-width: 0;
+    width: 100%;
+    padding: 12px 12px;
+    gap: 10px;
+    font-size: .86rem;
+  }
+  body[data-density="login"] .social-btn .brandmark {
+    width: 22px;
+    height: 22px;
+  }
+  body[data-density="login"] .social-btn span.label {
+    padding-right: 22px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  body[data-density="login"] .login-tabs {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 4px;
+    padding: 3px;
+  }
+  body[data-density="login"] .login-tab {
+    min-width: 0;
+    padding: 10px 6px;
+    font-size: .8rem;
+  }
+  body[data-density="login"] .phone-field {
+    width: 100%;
+    min-width: 0;
+  }
+  body[data-density="login"] .phone-field .cc {
+    padding: 0 8px;
+    gap: 4px;
+    font-size: .8rem;
+    flex: none;
+  }
+  body[data-density="login"] .phone-field .flag {
+    width: 22px;
+    height: 15px;
+  }
+  body[data-density="login"] .phone-field .cc .ic {
+    display: none;
+  }
+  body[data-density="login"] .phone-field input {
+    min-width: 0;
+    flex: 1 1 0;
+    padding: 13px 10px;
+    font-size: .9rem;
+    letter-spacing: .02em;
+  }
+  body[data-density="login"] .btn-block {
+    width: 100%;
+    max-width: 100%;
+  }
+  body[data-density="login"] .terms-row {
+    flex-wrap: wrap;
+    text-align: left;
+    justify-content: flex-start;
+    font-size: .78rem;
+    gap: 8px;
+  }
+  body[data-density="login"] .demo-accounts {
+    max-width: 100%;
+  }
+  body[data-density="login"] .demo-account {
+    text-align: left;
+    overflow: hidden;
+  }
+  body[data-density="login"] .demo-account span,
+  body[data-density="login"] .demo-account small {
+    display: block;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
+  }
+  body[data-density="login"] .login-wave {
+    left: 0;
+    right: 0;
+  }
+
+  /* Flujo reserva / perfil / citas */
+  .book-flow .wrap {
+    margin-inline: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+  }
+  .book-top {
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+  }
+  .stepper {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .stepper .st { min-width: 0 !important; flex: 1; }
+  .stepper .lab { font-size: .55rem !important; }
+  .book-panel {
+    padding: 16px 14px !important;
+    border-radius: 18px;
+  }
+  .book-hero h1,
+  .citas-hero h1 {
+    font-size: clamp(1.45rem, 6.5vw, 1.9rem) !important;
+  }
+  .pet-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+  }
+  .help-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    text-align: left;
+  }
+  .help-banner .btn { width: 100%; justify-content: center; }
+  .ticket-card { overflow: hidden; }
+  .citas-tabs {
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .citas-tabs button {
+    padding: 9px 6px;
+    font-size: .78rem;
+    min-width: 0;
+  }
+  .nav-drawer-cta {
+    display: grid;
+    gap: 10px;
+  }
+  .nav-drawer-cta .btn {
+    width: 100%;
+    justify-content: center;
+    font-size: .9rem !important;
+  }
+  .nav-drawer-cta .user-chip {
+    display: block !important;
+    text-align: center;
+  }
+
+  /* Footer */
+  .site-footer .wrap {
+    margin-inline: 12px !important;
+    width: auto !important;
+  }
+  .site-footer .cols {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+}
+
+/* Refuerzo cuando JS marcó is-mobile (incluye login sin fixed-width) */
+body.is-mobile,
+html.is-mobile body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+body.is-mobile .header-cta { display: none !important; }
+body.is-mobile[data-density="login"] .login-card {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 20px 14px 22px !important;
+}
+body.is-mobile[data-density="login"] .login-tabs {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+body.is-mobile[data-density="login"] .phone-field input {
+  min-width: 0;
+}

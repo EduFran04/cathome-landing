@@ -130,8 +130,8 @@
       "age": "4 años",
       "breed": "Persa",
       "weight": "3.8 kg",
-      "photo": "assets/gatos/GATO10.png",
-      "photoFallback": "assets/gatos/GATO4.png",
+      "photo": "assets/gatos/GATO6.png",
+      "photoFallback": "assets/gatos/GATO1.png",
       "notes": ""
     },
     {
@@ -182,7 +182,7 @@
       "age": "2 años",
       "breed": "Siamés",
       "weight": "3.4 kg",
-      "photo": "assets/gatos/GATO10.png",
+      "photo": "assets/gatos/GATOS5.png",
       "photoFallback": "assets/gatos/GATO4.png",
       "notes": ""
     },
@@ -197,6 +197,19 @@
       "weight": "5.1 kg",
       "photo": "assets/gatos/GATO6.png",
       "photoFallback": "assets/gatos/GATO3.png",
+      "notes": ""
+    },
+    {
+      "id": "p_felix_carlos",
+      "userId": "u_facebook",
+      "name": "Félix",
+      "species": "Gato",
+      "sex": "Macho",
+      "age": "2 años",
+      "breed": "Mestizo",
+      "weight": "4.1 kg",
+      "photo": "assets/gatos/GATO4.png",
+      "photoFallback": "assets/gatos/GATO1.png",
       "notes": ""
     }
   ],

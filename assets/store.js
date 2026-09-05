@@ -141,8 +141,8 @@ const Store = (() => {
         age: "4 años",
         breed: "Persa",
         weight: "3.8 kg",
-        photo: "assets/gatos/GATO10.png",
-        photoFallback: "assets/gatos/GATO4.png",
+        photo: "assets/gatos/GATO6.png",
+        photoFallback: "assets/gatos/GATO1.png",
         notes: "",
       },
       {
@@ -193,7 +193,7 @@ const Store = (() => {
         age: "2 años",
         breed: "Siamés",
         weight: "3.4 kg",
-        photo: "assets/gatos/GATO10.png",
+        photo: "assets/gatos/GATOS5.png",
         photoFallback: "assets/gatos/GATO4.png",
         notes: "",
       },
@@ -210,12 +210,38 @@ const Store = (() => {
         photoFallback: "assets/gatos/GATO3.png",
         notes: "",
       },
+      {
+        id: "p_felix_carlos",
+        userId: "u_facebook",
+        name: "Félix",
+        species: "Gato",
+        sex: "Macho",
+        age: "2 años",
+        breed: "Mestizo",
+        weight: "4.1 kg",
+        photo: "assets/gatos/GATO4.png",
+        photoFallback: "assets/gatos/GATO1.png",
+        notes: "",
+      },
     ],
     appointments: [],
     services: [
       { id: "svc_esterilizacion", name: "Esterilización felina", price: 55 },
     ],
   };
+
+  /** Fotos disponibles en la demo (solo assets locales). */
+  const PET_PHOTOS = [
+    "assets/gatos/GATO1.png",
+    "assets/gatos/GATO2.png",
+    "assets/gatos/GATO3.png",
+    "assets/gatos/GATO4.png",
+    "assets/gatos/GATOS5.png",
+    "assets/gatos/GATO6.png",
+    "assets/gatos/GATO7.png",
+    "assets/gatos/GATO8.png",
+    "assets/gatos/GATO9.png",
+  ];
 
   let ready = null;
 
@@ -306,8 +332,25 @@ const Store = (() => {
       }
     }
     for (const p of SEED.pets) {
-      if (!db.pets.some((x) => x.id === p.id)) {
+      const existing = db.pets.find((x) => x.id === p.id);
+      if (!existing) {
         db.pets.push(clone(p));
+        changed = true;
+      } else if (existing.photo !== p.photo || existing.photoFallback !== p.photoFallback) {
+        // Actualiza rutas de foto del seed (corrige GATO10 inexistente, etc.)
+        existing.photo = p.photo;
+        existing.photoFallback = p.photoFallback;
+        changed = true;
+      }
+    }
+    // Corrige fotos rotas en mascotas ya guardadas
+    for (const pet of db.pets) {
+      if (pet.photo && !PET_PHOTOS.includes(pet.photo)) {
+        pet.photo = PET_PHOTOS[0];
+        changed = true;
+      }
+      if (pet.photoFallback && !PET_PHOTOS.includes(pet.photoFallback)) {
+        pet.photoFallback = PET_PHOTOS[0];
         changed = true;
       }
     }
@@ -461,6 +504,9 @@ const Store = (() => {
   }
 
   function createPet(userId, data) {
+    const photos = petPhotos();
+    const photo =
+      data.photo && photos.includes(data.photo) ? data.photo : photos[0];
     return upsertPet({
       id: uid("p"),
       userId,
@@ -470,10 +516,19 @@ const Store = (() => {
       age: data.age || "",
       breed: data.breed || "",
       weight: data.weight || "",
-      photo: data.photo || "assets/gatos/GATO7.png",
-      photoFallback: data.photoFallback || "assets/gatos/GATO1.png",
+      photo,
+      photoFallback: data.photoFallback || photos[0],
       notes: data.notes || "",
     });
+  }
+
+  function petPhotos() {
+    return PET_PHOTOS.slice();
+  }
+
+  function photoSrc(pet) {
+    const src = pet?.photo || PET_PHOTOS[0];
+    return PET_PHOTOS.includes(src) ? src : PET_PHOTOS[0];
   }
 
   function appointmentsOf(userId) {
@@ -569,10 +624,6 @@ const Store = (() => {
     return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
-  function photoSrc(pet) {
-    return pet?.photo || "assets/gatos/GATO1.png";
-  }
-
   return {
     init,
     resetDemo,
@@ -595,6 +646,7 @@ const Store = (() => {
     getPet,
     upsertPet,
     createPet,
+    petPhotos,
     appointmentsOf,
     getAppointment,
     createAppointment,

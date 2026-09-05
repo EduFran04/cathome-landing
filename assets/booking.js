@@ -37,8 +37,154 @@ const Booking = (() => {
 
   function imgTag(pet, cls) {
     const src = Store.photoSrc(pet);
-    const fb = pet?.photoFallback || "assets/gatos/GATO1.png";
+    const fb = pet?.photoFallback || Store.petPhotos()[0];
     return `<img class="${cls || ""}" src="${src}" alt="${pet?.name || "Mascota"}" onerror="this.onerror=null;this.src='${fb}'">`;
+  }
+
+  /** Círculo "Agregar foto" + modal de selección (solo assets demo). */
+  function ensurePhotoModal() {
+    let modal = document.getElementById("photoModal");
+    if (modal) return modal;
+    modal = document.createElement("div");
+    modal.id = "photoModal";
+    modal.className = "photo-modal";
+    modal.hidden = true;
+    modal.innerHTML = `
+      <div class="photo-modal-backdrop" data-photo-close tabindex="-1"></div>
+      <div class="photo-modal-card" role="dialog" aria-modal="true" aria-labelledby="photoModalTitle">
+        <div class="photo-modal-head">
+          <div>
+            <h3 id="photoModalTitle">Elige una foto</h3>
+            <p>Demo: selecciona una de las imágenes de gatos disponibles.</p>
+          </div>
+          <button type="button" class="photo-modal-x" data-photo-close aria-label="Cerrar">×</button>
+        </div>
+        <div class="photo-picker" data-photo-modal-grid></div>
+        <div class="photo-modal-actions">
+          <button type="button" class="btn btn-soft" data-photo-close>Cancelar</button>
+          <button type="button" class="btn btn-orange" data-photo-confirm>Usar esta foto</button>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+    return modal;
+  }
+
+  function bindPhotoPicker(root, selectedSrc) {
+    const scope = root && root.querySelector ? root : document;
+    const trigger =
+      scope.querySelector("[data-photo-trigger]") ||
+      document.querySelector("[data-photo-trigger]");
+    if (!trigger) return Store.petPhotos()[0];
+
+    const photos = Store.petPhotos();
+    let selected =
+      selectedSrc && photos.includes(selectedSrc) ? selectedSrc : "";
+
+    const preview = trigger.querySelector("[data-photo-preview]");
+    const placeholder = trigger.querySelector("[data-photo-placeholder]");
+    const valueEl =
+      scope.querySelector("[data-photo-value]") ||
+      document.querySelector("[data-photo-value]");
+
+    function paintCircle() {
+      if (valueEl) valueEl.value = selected || "";
+      if (selected && preview) {
+        preview.src = selected;
+        preview.hidden = false;
+        if (placeholder) placeholder.hidden = true;
+        trigger.classList.add("has-photo");
+        preview.onerror = () => {
+          preview.hidden = true;
+          if (placeholder) placeholder.hidden = false;
+          trigger.classList.remove("has-photo");
+        };
+      } else {
+        if (preview) preview.hidden = true;
+        if (placeholder) placeholder.hidden = false;
+        trigger.classList.remove("has-photo");
+      }
+    }
+
+    let pending = selected || photos[0];
+
+    function openModal() {
+      const modal = ensurePhotoModal();
+      const grid = modal.querySelector("[data-photo-modal-grid]");
+      pending = selected || photos[0];
+
+      function paintGrid() {
+        grid.innerHTML = photos
+          .map(
+            (src) => `
+          <button type="button" class="photo-opt${src === pending ? " on" : ""}" data-pet-photo="${src}" aria-pressed="${src === pending}">
+            <img src="${src}" alt="Foto de gato">
+          </button>`
+          )
+          .join("");
+        grid.querySelectorAll("[data-pet-photo]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            pending = btn.dataset.petPhoto;
+            paintGrid();
+          });
+        });
+      }
+      paintGrid();
+      modal.hidden = false;
+      document.body.classList.add("photo-modal-open");
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("photoModal");
+      if (!modal) return;
+      modal.hidden = true;
+      document.body.classList.remove("photo-modal-open");
+    }
+
+    function confirmModal() {
+      selected = pending || photos[0];
+      paintCircle();
+      closeModal();
+    }
+
+    const modal = ensurePhotoModal();
+    if (!modal.dataset.bound) {
+      modal.dataset.bound = "1";
+      modal.addEventListener("click", (e) => {
+        if (e.target.closest("[data-photo-close]")) closeModal();
+        if (e.target.closest("[data-photo-confirm]")) {
+          if (typeof modal._confirm === "function") modal._confirm();
+        }
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.hidden) closeModal();
+      });
+    }
+    modal._confirm = confirmModal;
+
+    trigger.onclick = (e) => {
+      e.preventDefault();
+      openModal();
+    };
+
+    paintCircle();
+    trigger._getSelected = () => selected || photos[0];
+    if (valueEl) valueEl._getSelected = () => selected || photos[0];
+    return selected || photos[0];
+  }
+
+  function selectedPetPhoto(root) {
+    const scope = root && root.querySelector ? root : document;
+    const trigger =
+      scope.querySelector("[data-photo-trigger]") ||
+      document.querySelector("[data-photo-trigger]");
+    if (trigger && typeof trigger._getSelected === "function") {
+      return trigger._getSelected();
+    }
+    const valueEl =
+      scope.querySelector("[data-photo-value]") ||
+      document.querySelector("[data-photo-value]");
+    if (valueEl?.value) return valueEl.value;
+    return Store.petPhotos()[0];
   }
 
   /* ---------- Paso 1: mascota ---------- */
@@ -160,6 +306,8 @@ const Booking = (() => {
     if ($("ownerEmail")) $("ownerEmail").value = user.email || "";
     if ($("ownerAddress")) $("ownerAddress").value = user.address || "";
 
+    bindPhotoPicker(document, pet?.photo);
+
     const next = $("btn-next");
     if (!next) return;
     next.addEventListener("click", (e) => {
@@ -181,6 +329,7 @@ const Booking = (() => {
 
       const sexVal =
         document.querySelector('input[name="sex"]:checked')?.value || "Hembra";
+      const photo = selectedPetPhoto();
       const petData = {
         name,
         species: $("petSpecies")?.value || "Gato",
@@ -189,6 +338,8 @@ const Booking = (() => {
         breed: ($("petBreed")?.value || "").trim(),
         weight: ($("petWeight")?.value || "").trim(),
         notes: ($("petNotes")?.value || "").trim(),
+        photo,
+        photoFallback: Store.petPhotos()[0],
       };
 
       let savedPet;
@@ -567,6 +718,190 @@ const Booking = (() => {
     render();
   }
 
+  function initPerfil() {
+    const user = Store.currentUser();
+    if (!user) return;
+
+    const $id = (id) => document.getElementById(id);
+    let editingPetId = null;
+
+    const providerLabel = {
+      phone: "Teléfono",
+      email: "Correo",
+      google: "Google",
+      facebook: "Facebook",
+      guest: "Invitado",
+    };
+
+    function fillOwner() {
+      const u = Store.currentUser();
+      if (!u) return;
+      if ($id("perfilName")) $id("perfilName").textContent = u.name || "—";
+      if ($id("perfilProvider")) {
+        $id("perfilProvider").textContent = providerLabel[u.provider] || u.provider || "Cuenta";
+      }
+      if ($id("ownerName")) $id("ownerName").value = u.name || "";
+      if ($id("ownerPhone")) {
+        $id("ownerPhone").value = u.phone
+          ? window.Masks
+            ? Masks.formatSvPhone(u.phone)
+            : u.phone
+          : "";
+      }
+      if ($id("ownerEmail")) $id("ownerEmail").value = u.email || "";
+      if ($id("ownerAddress")) $id("ownerAddress").value = u.address || "";
+    }
+
+    function closePetForm() {
+      editingPetId = null;
+      const panel = $id("petFormPanel");
+      if (panel) panel.hidden = true;
+      if ($id("pet-error")) $id("pet-error").textContent = "";
+    }
+
+    function openPetForm(pet) {
+      editingPetId = pet?.id || null;
+      const panel = $id("petFormPanel");
+      if (!panel) return;
+      panel.hidden = false;
+      if ($id("petFormTitle")) {
+        $id("petFormTitle").textContent = pet ? `Editar a ${pet.name}` : "Nueva mascota";
+      }
+      if ($id("petName")) $id("petName").value = pet?.name || "";
+      if ($id("petSpecies")) $id("petSpecies").value = pet?.species || "Gato";
+      if ($id("petAge")) $id("petAge").value = pet?.age || "";
+      if ($id("petBreed")) $id("petBreed").value = pet?.breed || "";
+      if ($id("petWeight")) $id("petWeight").value = pet?.weight || "";
+      if ($id("petNotes")) $id("petNotes").value = pet?.notes || "";
+      const sex = pet?.sex || "Hembra";
+      document.querySelectorAll('input[name="sex"]').forEach((r) => {
+        r.checked = r.value === sex;
+      });
+      bindPhotoPicker(panel, pet?.photo);
+      panel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderPets() {
+      const u = Store.currentUser();
+      const grid = $id("perfilPetGrid");
+      const empty = $id("petsEmpty");
+      if (!grid || !u) return;
+      const pets = Store.petsOf(u.id);
+
+      if (!pets.length) {
+        grid.innerHTML = "";
+        if (empty) empty.hidden = false;
+        return;
+      }
+      if (empty) empty.hidden = true;
+      grid.innerHTML = pets
+        .map((p) => {
+          const src = Store.photoSrc(p);
+          const fb = p.photoFallback || "assets/gatos/GATO1.png";
+          return `<article class="perfil-pet-card">
+            <img src="${src}" alt="${p.name}" onerror="this.onerror=null;this.src='${fb}'">
+            <div class="info">
+              <strong>${p.name}</strong>
+              <small>${p.species || "Gato"} · ${Store.petMeta(p)}</small>
+              ${p.breed ? `<span class="tag">${p.breed}</span>` : ""}
+              ${p.notes ? `<p class="note">${p.notes}</p>` : ""}
+            </div>
+            <div class="actions">
+              <button type="button" class="btn btn-soft" data-edit-pet="${p.id}">Editar</button>
+              <a class="btn btn-orange" href="reserva-mascota.html" data-book-pet="${p.id}">Agendar</a>
+            </div>
+          </article>`;
+        })
+        .join("");
+
+      grid.querySelectorAll("[data-edit-pet]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const pet = Store.getPet(btn.dataset.editPet);
+          if (pet) openPetForm(pet);
+        });
+      });
+      grid.querySelectorAll("[data-book-pet]").forEach((a) => {
+        a.addEventListener("click", () => {
+          const svc = Store.defaultService();
+          Store.setDraft({
+            petId: a.dataset.bookPet,
+            newPet: false,
+            serviceId: svc.id,
+            serviceName: svc.name,
+            price: svc.price,
+          });
+        });
+      });
+    }
+
+    fillOwner();
+    renderPets();
+    if (window.initMasks) initMasks();
+
+    $id("ownerForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = ($id("ownerName")?.value || "").trim();
+      const email = ($id("ownerEmail")?.value || "").trim();
+      const phoneRaw = ($id("ownerPhone")?.value || "").replace(/\D/g, "");
+      const phone = phoneRaw.startsWith("503") ? phoneRaw.slice(3) : phoneRaw;
+      const err = $id("owner-error");
+      if (!name || !email || phone.length < 8) {
+        if (err) err.textContent = "Completa nombre, teléfono y correo.";
+        toast("Completa los campos obligatorios");
+        return;
+      }
+      if (err) err.textContent = "";
+      Store.updateUser(user.id, {
+        name,
+        email,
+        phone,
+        address: ($id("ownerAddress")?.value || "").trim(),
+      });
+      fillOwner();
+      toast("Datos del perfil guardados");
+    });
+
+    const openAdd = () => openPetForm(null);
+    $id("btn-add-pet")?.addEventListener("click", openAdd);
+    $id("btn-add-pet-empty")?.addEventListener("click", openAdd);
+    $id("btn-cancel-pet")?.addEventListener("click", closePetForm);
+
+    $id("btn-save-pet")?.addEventListener("click", () => {
+      const name = ($id("petName")?.value || "").trim();
+      const age = ($id("petAge")?.value || "").trim();
+      const err = $id("pet-error");
+      if (!name || !age) {
+        if (err) err.textContent = "Nombre y edad son obligatorios.";
+        toast("Completa nombre y edad");
+        return;
+      }
+      if (err) err.textContent = "";
+      const sexVal =
+        document.querySelector('input[name="sex"]:checked')?.value || "Hembra";
+      const photo = selectedPetPhoto($id("petFormPanel"));
+      const petData = {
+        name,
+        species: $id("petSpecies")?.value || "Gato",
+        sex: sexVal,
+        age,
+        breed: ($id("petBreed")?.value || "").trim(),
+        weight: ($id("petWeight")?.value || "").trim(),
+        notes: ($id("petNotes")?.value || "").trim(),
+        photo,
+        photoFallback: Store.petPhotos()[0],
+      };
+      if (editingPetId) {
+        Store.upsertPet({ id: editingPetId, userId: user.id, ...petData });
+        toast(`Datos de ${name} actualizados`);
+      } else {
+        Store.createPet(user.id, petData);
+        toast(`${name} se agregó a tu perfil`);
+      }
+      closePetForm();
+      renderPets();
+    });
+  }
+
   async function boot() {
     await Store.init();
     if (document.body.hasAttribute("data-requires-account") && !Store.isLoggedIn()) {
@@ -585,6 +920,7 @@ const Booking = (() => {
       pago: initPago,
       exito: initExito,
       "mis-citas": initMisCitas,
+      perfil: initPerfil,
     };
     map[step]?.();
   }

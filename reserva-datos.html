@@ -50,12 +50,14 @@
       </div>
 
       <div class="datos-layout">
-        <div class="photo-add" role="button" tabindex="0">
-          <div>
+        <button type="button" class="photo-add" data-photo-trigger aria-label="Agregar o cambiar foto">
+          <img data-photo-preview alt="" hidden>
+          <span data-photo-placeholder>
             <svg class="ic"><use href="#i-cat"/></svg>
-            Agregar foto<br>(opcional)
-          </div>
-        </div>
+            Agregar foto
+          </span>
+        </button>
+        <input type="hidden" data-photo-value value="">
         <div class="form-grid">
           <div class="field">
             <label for="petName">Nombre de tu mascota <span class="req">*</span></label>

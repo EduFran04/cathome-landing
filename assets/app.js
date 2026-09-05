@@ -202,6 +202,7 @@ function renderHeader() {
   const right = session.on
     ? `<span class="user-chip">¡Hola, ${first}!</span>
        <a class="btn btn-orange" href="reserva-mascota.html">Reserva tu cita</a>
+       <a class="btn btn-soft" href="perfil.html" data-needs-account>Mi perfil</a>
        <a class="btn btn-soft" href="mis-citas.html" data-needs-account>Mis citas</a>
        <button class="btn btn-soft" data-logout>Salir</button>`
     : `${session.guest
@@ -334,8 +335,10 @@ function initGuards() {
     el.addEventListener("click", (e) => {
       if (session.on) return;
       e.preventDefault();
-      toast("Mis citas solo está disponible con una cuenta (no como invitado)");
-      setTimeout(() => (location.href = "login.html?next=mis-citas.html"), 700);
+      const href = el.getAttribute("href") || "mis-citas.html";
+      const next = href.includes("perfil") ? "perfil.html" : "mis-citas.html";
+      toast("Inicia sesión con tu cuenta para continuar");
+      setTimeout(() => (location.href = `login.html?next=${next}`), 700);
     })
   );
 }

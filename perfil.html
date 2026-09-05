@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi perfil — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-requires-account data-booking="perfil">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow perfil-page">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="index.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+    </div>
+
+    <header class="citas-hero">
+      <div>
+        <div class="eyebrow">TU CUENTA</div>
+        <h1>Mi <span class="script">perfil</span>
+          <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
+        </h1>
+        <p>Consulta tus datos y las mascotas asociadas a tu cuenta, sin pasar por la reserva.</p>
+      </div>
+      <div class="perfil-hero-actions">
+        <a class="btn btn-soft" href="mis-citas.html">Mis citas</a>
+        <a class="btn btn-orange" href="reserva-mascota.html">
+          Agendar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <section class="book-panel perfil-owner">
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
+        <div>
+          <h2>Tus datos</h2>
+          <p>Información de contacto asociada a tu cuenta.</p>
+        </div>
+      </div>
+
+      <div class="perfil-owner-summary" id="ownerSummary">
+        <div class="perfil-avatar" aria-hidden="true">
+          <svg class="ic"><use href="#i-user"/></svg>
+        </div>
+        <div class="perfil-owner-meta">
+          <strong id="perfilName">—</strong>
+          <span id="perfilProvider"></span>
+        </div>
+      </div>
+
+      <form class="form-grid" id="ownerForm" novalidate>
+        <div class="field full">
+          <label for="ownerName">Nombre completo <span class="req">*</span></label>
+          <input id="ownerName" type="text" placeholder="Tu nombre completo" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="ownerPhone">Teléfono <span class="req">*</span></label>
+          <input id="ownerPhone" type="tel" inputmode="numeric" data-mask="sv-phone" autocomplete="tel">
+        </div>
+        <div class="field">
+          <label for="ownerEmail">Correo electrónico <span class="req">*</span></label>
+          <input id="ownerEmail" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+        </div>
+        <div class="field full">
+          <label for="ownerAddress">Dirección (opcional)</label>
+          <input id="ownerAddress" type="text" placeholder="Ej. Colonia Escalón, San Salvador" autocomplete="street-address">
+        </div>
+        <p class="form-error" id="owner-error"></p>
+        <div class="field full perfil-form-actions">
+          <button type="submit" class="btn btn-green" id="btn-save-owner">
+            Guardar datos <svg class="ic"><use href="#i-check"/></svg>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <section class="book-panel">
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-cat"/></svg></div>
+        <div>
+          <h2>Mis mascotas</h2>
+          <p>Mascotas vinculadas a tu cuenta. Puedes agregar o editar sin agendar.</p>
+        </div>
+        <button type="button" class="btn btn-orange" id="btn-add-pet">
+          Agregar mascota <svg class="ic"><use href="#i-arrow-r"/></svg>
+        </button>
+      </div>
+
+      <div id="petsEmpty" class="citas-empty" hidden>
+        <div class="ico"><svg class="ic"><use href="#i-cat"/></svg></div>
+        <h2>Aún no tienes mascotas</h2>
+        <p>Agrega el perfil de tu gato aquí para tenerlo listo cuando reserves una cita.</p>
+        <button type="button" class="btn btn-orange" id="btn-add-pet-empty">
+          Agregar mascota <svg class="ic"><use href="#i-arrow-r"/></svg>
+        </button>
+      </div>
+
+      <div class="perfil-pet-grid" id="perfilPetGrid"></div>
+    </section>
+
+    <section class="book-panel perfil-pet-form" id="petFormPanel" hidden>
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-paw-heart"/></svg></div>
+        <div>
+          <h2 id="petFormTitle">Nueva mascota</h2>
+          <p>Completa los datos de tu gato. Podrás usarlos en futuras reservas.</p>
+        </div>
+        <button type="button" class="btn btn-soft" id="btn-cancel-pet">Cancelar</button>
+      </div>
+
+      <div class="datos-layout">
+        <button type="button" class="photo-add" data-photo-trigger aria-label="Agregar o cambiar foto">
+          <img data-photo-preview alt="" hidden>
+          <span data-photo-placeholder>
+            <svg class="ic"><use href="#i-cat"/></svg>
+            Agregar foto
+          </span>
+        </button>
+        <input type="hidden" data-photo-value value="">
+        <div class="form-grid">
+          <div class="field">
+            <label for="petName">Nombre <span class="req">*</span></label>
+            <input id="petName" type="text" placeholder="Ej. Misu">
+          </div>
+          <div class="field">
+            <label for="petSpecies">Especie <span class="req">*</span></label>
+            <select id="petSpecies"><option>Gato</option></select>
+          </div>
+          <div class="field">
+            <label>Sexo <span class="req">*</span></label>
+            <div class="sex-row">
+              <label><input type="radio" name="sex" value="Hembra" checked> Hembra</label>
+              <label><input type="radio" name="sex" value="Macho"> Macho</label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="petAge">Edad <span class="req">*</span></label>
+            <select id="petAge">
+              <option value="">Selecciona la edad</option>
+              <option>6 meses</option>
+              <option>1 año</option>
+              <option>2 años</option>
+              <option>3 años</option>
+              <option>4 años</option>
+              <option>5 años</option>
+              <option>6+ años</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="petBreed">Raza (opcional)</label>
+            <input id="petBreed" type="text" placeholder="Ej. Siamés, Mestizo…">
+          </div>
+          <div class="field">
+            <label for="petWeight">Peso aproximado (opcional)</label>
+            <input id="petWeight" type="text" placeholder="Ej. 4 kg">
+          </div>
+          <div class="field full">
+            <label for="petNotes">Observaciones (opcional)</label>
+            <textarea id="petNotes" placeholder="Alergias, temperamento u otros detalles…"></textarea>
+          </div>
+        </div>
+      </div>
+      <p class="form-error" id="pet-error"></p>
+      <div class="perfil-form-actions">
+        <button type="button" class="btn btn-green" id="btn-save-pet">
+          Guardar mascota <svg class="ic"><use href="#i-check"/></svg>
+        </button>
+      </div>
+    </section>
+
+    <div class="book-actions" style="max-width:820px">
+      <a class="btn-outline-green" href="index.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver al inicio
+      </a>
+      <a class="btn btn-orange" href="reserva-mascota.html">
+        Reservar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
+<script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
+</body>
+</html>
