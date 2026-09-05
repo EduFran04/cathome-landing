@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-booking="fecha">
 
 <header class="site-header" data-header></header>
 
@@ -60,36 +60,36 @@
           <button type="button" class="day off">28</button>
           <button type="button" class="day off">29</button>
           <button type="button" class="day off">30</button>
-          <button type="button" class="day avail">1</button>
-          <button type="button" class="day avail">2</button>
+          <button type="button" class="day avail" data-date="2026-05-01">1</button>
+          <button type="button" class="day avail" data-date="2026-05-02">2</button>
           <button type="button" class="day off">3</button>
-          <button type="button" class="day avail">4</button>
-          <button type="button" class="day avail">5</button>
-          <button type="button" class="day avail">6</button>
-          <button type="button" class="day avail">7</button>
-          <button type="button" class="day avail">8</button>
-          <button type="button" class="day avail">9</button>
+          <button type="button" class="day avail" data-date="2026-05-04">4</button>
+          <button type="button" class="day avail" data-date="2026-05-05">5</button>
+          <button type="button" class="day avail" data-date="2026-05-06">6</button>
+          <button type="button" class="day avail" data-date="2026-05-07">7</button>
+          <button type="button" class="day avail" data-date="2026-05-08">8</button>
+          <button type="button" class="day avail" data-date="2026-05-09">9</button>
           <button type="button" class="day off">10</button>
-          <button type="button" class="day avail">11</button>
-          <button type="button" class="day avail">12</button>
-          <button type="button" class="day avail">13</button>
-          <button type="button" class="day avail">14</button>
-          <button type="button" class="day avail">15</button>
-          <button type="button" class="day avail on">16</button>
+          <button type="button" class="day avail" data-date="2026-05-11">11</button>
+          <button type="button" class="day avail" data-date="2026-05-12">12</button>
+          <button type="button" class="day avail" data-date="2026-05-13">13</button>
+          <button type="button" class="day avail" data-date="2026-05-14">14</button>
+          <button type="button" class="day avail" data-date="2026-05-15">15</button>
+          <button type="button" class="day avail on" data-date="2026-05-16">16</button>
           <button type="button" class="day off">17</button>
-          <button type="button" class="day avail">18</button>
-          <button type="button" class="day avail">19</button>
-          <button type="button" class="day avail">20</button>
-          <button type="button" class="day avail">21</button>
-          <button type="button" class="day avail">22</button>
-          <button type="button" class="day avail">23</button>
+          <button type="button" class="day avail" data-date="2026-05-18">18</button>
+          <button type="button" class="day avail" data-date="2026-05-19">19</button>
+          <button type="button" class="day avail" data-date="2026-05-20">20</button>
+          <button type="button" class="day avail" data-date="2026-05-21">21</button>
+          <button type="button" class="day avail" data-date="2026-05-22">22</button>
+          <button type="button" class="day avail" data-date="2026-05-23">23</button>
           <button type="button" class="day off">24</button>
-          <button type="button" class="day avail">25</button>
-          <button type="button" class="day avail">26</button>
-          <button type="button" class="day avail">27</button>
-          <button type="button" class="day avail">28</button>
-          <button type="button" class="day avail">29</button>
-          <button type="button" class="day avail">30</button>
+          <button type="button" class="day avail" data-date="2026-05-25">25</button>
+          <button type="button" class="day avail" data-date="2026-05-26">26</button>
+          <button type="button" class="day avail" data-date="2026-05-27">27</button>
+          <button type="button" class="day avail" data-date="2026-05-28">28</button>
+          <button type="button" class="day avail" data-date="2026-05-29">29</button>
+          <button type="button" class="day avail" data-date="2026-05-30">30</button>
           <button type="button" class="day off">31</button>
         </div>
         <div class="cal-legend">
@@ -104,20 +104,20 @@
           <div class="ico"><svg class="ic"><use href="#i-clock"/></svg></div>
           <div>
             <h2>Selecciona un horario</h2>
-            <p>Horarios disponibles para el Sábado, 16 de mayo de 2026.</p>
+            <p id="selectedDateLabel">Horarios disponibles para el Sábado, 16 de mayo de 2026.</p>
           </div>
         </div>
         <div class="slots-grid" id="slots">
-          <button type="button" class="slot-btn">8:00 a.m.</button>
-          <button type="button" class="slot-btn">8:30 a.m.</button>
-          <button type="button" class="slot-btn">9:00 a.m.</button>
-          <button type="button" class="slot-btn">9:30 a.m.</button>
-          <button type="button" class="slot-btn on">10:00 a.m.</button>
-          <button type="button" class="slot-btn">10:30 a.m.</button>
-          <button type="button" class="slot-btn">11:00 a.m.</button>
-          <button type="button" class="slot-btn">11:30 a.m.</button>
-          <button type="button" class="slot-btn">2:00 p.m.</button>
-          <button type="button" class="slot-btn">2:30 p.m.</button>
+          <button type="button" class="slot-btn" data-time="08:00">8:00 a.m.</button>
+          <button type="button" class="slot-btn" data-time="08:30">8:30 a.m.</button>
+          <button type="button" class="slot-btn" data-time="09:00">9:00 a.m.</button>
+          <button type="button" class="slot-btn" data-time="09:30">9:30 a.m.</button>
+          <button type="button" class="slot-btn on" data-time="10:00">10:00 a.m.</button>
+          <button type="button" class="slot-btn" data-time="10:30">10:30 a.m.</button>
+          <button type="button" class="slot-btn" data-time="11:00">11:00 a.m.</button>
+          <button type="button" class="slot-btn" data-time="11:30">11:30 a.m.</button>
+          <button type="button" class="slot-btn" data-time="14:00">2:00 p.m.</button>
+          <button type="button" class="slot-btn" data-time="14:30">2:30 p.m.</button>
         </div>
         <div class="info-note">
           <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-question"/></svg>
@@ -130,7 +130,7 @@
       <a class="btn-outline-green" href="reserva-datos.html">
         <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
       </a>
-      <a class="btn btn-orange" href="reserva-confirma.html">
+      <a class="btn btn-orange" href="#" id="btn-next">
         Siguiente <svg class="ic"><use href="#i-arrow-r"/></svg>
       </a>
     </div>
@@ -138,20 +138,8 @@
 </main>
 
 <footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
-<script>
-  document.querySelectorAll("#calGrid .day.avail").forEach((d) => {
-    d.addEventListener("click", () => {
-      document.querySelectorAll("#calGrid .day").forEach((x) => x.classList.remove("on"));
-      d.classList.add("on");
-    });
-  });
-  document.querySelectorAll("#slots .slot-btn").forEach((s) => {
-    s.addEventListener("click", () => {
-      document.querySelectorAll("#slots .slot-btn").forEach((x) => x.classList.remove("on"));
-      s.classList.add("on");
-    });
-  });
-</script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

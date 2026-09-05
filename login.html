@@ -15,17 +15,10 @@
   <div class="login-wave top"></div>
   <div class="login-wave"></div>
 
-  <!-- Huellitas decorativas -->
   <div class="deco" style="left:6%;top:6%;width:52px">
     <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
   </div>
   <div class="deco" style="right:7%;top:16%;width:42px">
-    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
-  </div>
-  <div class="deco" style="right:9%;bottom:10%;width:46px">
-    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
-  </div>
-  <div class="deco" style="left:8%;bottom:8%;width:38px">
     <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
   </div>
 
@@ -58,7 +51,7 @@
     </div>
 
     <form class="login-stack" id="login-form" novalidate>
-      <button type="button" class="social-btn" data-social="Facebook">
+      <button type="button" class="social-btn" data-social="facebook" id="btn-facebook">
         <svg class="brandmark" viewBox="0 0 32 32">
           <circle cx="16" cy="16" r="16" fill="#1877f2"/>
           <path d="M20.2 20.6l.6-4.3h-4.1v-2.8c0-1.2.6-2.3 2.4-2.3h1.9V7.5s-1.7-.3-3.3-.3c-3.4 0-5.6 2-5.6 5.7v3.4H8.3v4.3h3.8V31a16 16 0 0 0 4.6 0v-10.4h3.5Z" fill="#fff"/>
@@ -66,7 +59,7 @@
         <span class="label">Continuar con Facebook</span>
       </button>
 
-      <button type="button" class="social-btn" data-social="Google">
+      <button type="button" class="social-btn" data-social="google" id="btn-google">
         <svg class="brandmark" viewBox="0 0 48 48">
           <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.6 30.2.5 24 .5 14.6.5 6.5 5.9 2.6 13.7l7.8 6.1C12.3 14 17.6 9.5 24 9.5Z"/>
           <path fill="#4285F4" d="M46.5 24.5c0-1.6-.15-3.2-.44-4.7H24v9h12.7c-.55 2.9-2.2 5.4-4.7 7l7.6 5.9c4.4-4.1 6.9-10.2 6.9-17.2Z"/>
@@ -78,19 +71,37 @@
 
       <div class="or-divider">o continúa con</div>
 
-      <div class="phone-field">
-        <div class="cc">
-          <span class="flag">
-            <svg viewBox="0 0 30 20">
-              <rect width="30" height="20" fill="#0F47AF"/>
-              <rect y="6.7" width="30" height="6.6" fill="#fff"/>
-              <circle cx="15" cy="10" r="2.2" fill="#0F47AF" opacity=".7"/>
-            </svg>
-          </span>
-          <svg class="ic" style="width:14px;height:14px;color:#8a978f"><use href="#i-chevron"/></svg>
-          <span>+503</span>
+      <div class="login-tabs" role="tablist">
+        <button type="button" class="login-tab on" data-tab="phone">Teléfono</button>
+        <button type="button" class="login-tab" data-tab="email">Correo</button>
+      </div>
+
+      <div id="panel-phone" class="login-panel">
+        <div class="phone-field">
+          <div class="cc">
+            <span class="flag">
+              <svg viewBox="0 0 30 20">
+                <rect width="30" height="20" fill="#0F47AF"/>
+                <rect y="6.7" width="30" height="6.6" fill="#fff"/>
+                <circle cx="15" cy="10" r="2.2" fill="#0F47AF" opacity=".7"/>
+              </svg>
+            </span>
+            <svg class="ic" style="width:14px;height:14px;color:#8a978f"><use href="#i-chevron"/></svg>
+            <span>+503</span>
+          </div>
+          <input id="phone" type="tel" inputmode="numeric" placeholder="Número de teléfono" autocomplete="tel">
         </div>
-        <input id="phone" type="tel" inputmode="numeric" placeholder="Número de teléfono" autocomplete="tel">
+      </div>
+
+      <div id="panel-email" class="login-panel" hidden>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input id="email" type="email" placeholder="tucorreo@ejemplo.com" autocomplete="email">
+        </div>
+        <div class="field" style="margin-top:10px">
+          <label for="password">Contraseña</label>
+          <input id="password" type="password" placeholder="Tu contraseña" autocomplete="current-password">
+        </div>
       </div>
 
       <p class="form-error" id="login-error"></p>
@@ -112,42 +123,130 @@
         <svg class="ic" style="width:15px;height:15px"><use href="#i-lock"/></svg>
         Tus datos están protegidos
       </p>
-      <p class="demo-hint">Cuenta demo registrada: <strong>7000-0000</strong></p>
+      <p class="demo-hint">
+        Demo teléfono: <strong>7000-0000</strong><br>
+        Demo correo: <strong>maria@cathome.demo</strong> / <strong>demo123</strong>
+      </p>
     </form>
   </section>
 </main>
 
+<div class="auth-overlay" id="authOverlay" hidden>
+  <div class="auth-modal">
+    <div class="auth-spin"></div>
+    <p id="authOverlayText">Conectando…</p>
+    <small>Simulación segura de inicio de sesión</small>
+  </div>
+</div>
+
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
 <script>
-  const err = document.getElementById("login-error");
+(async () => {
+  await Store.init();
+  if (Store.isLoggedIn()) {
+    location.replace(loginRedirectTarget());
+    return;
+  }
 
-  function entrar(via) {
+  const err = document.getElementById("login-error");
+  const overlay = document.getElementById("authOverlay");
+  const overlayText = document.getElementById("authOverlayText");
+  let mode = "phone";
+
+  document.querySelectorAll(".login-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      mode = tab.dataset.tab;
+      document.querySelectorAll(".login-tab").forEach((t) => t.classList.toggle("on", t === tab));
+      document.getElementById("panel-phone").hidden = mode !== "phone";
+      document.getElementById("panel-email").hidden = mode !== "email";
+      err.textContent = "";
+    });
+  });
+
+  function needTerms() {
     if (!document.getElementById("terms").checked) {
       err.textContent = "Debes aceptar los términos y condiciones.";
-      return;
+      return false;
     }
-    session.start();
-    err.textContent = "";
-    toast(via ? `Sesión iniciada con ${via}` : "Sesión iniciada Â· " + CH.displayPhone);
-    setTimeout(() => (location.href = "reserva-mascota.html"), 700);
+    return true;
   }
+
+  function finish(user, via) {
+    err.textContent = "";
+    toast(`Bienvenida/o, ${user.name.split(" ")[0]} · sesión con ${via}`);
+    setTimeout(() => (location.href = loginRedirectTarget()), 700);
+  }
+
+  function simulateSocial(provider) {
+    if (!needTerms()) return;
+    const label = provider === "google" ? "Google" : "Facebook";
+    const userId = provider === "google" ? "u_google" : "u_facebook";
+    overlay.hidden = false;
+    overlayText.textContent = `Conectando con ${label}…`;
+    setTimeout(() => {
+      overlayText.textContent = "Verificando permisos…";
+    }, 700);
+    setTimeout(() => {
+      const user = Store.loginAs(userId, provider);
+      overlay.hidden = true;
+      finish(user, label);
+    }, 1600);
+  }
+
+  document.getElementById("btn-google").addEventListener("click", () => simulateSocial("google"));
+  document.getElementById("btn-facebook").addEventListener("click", () => simulateSocial("facebook"));
 
   document.getElementById("login-form").addEventListener("submit", (e) => {
     e.preventDefault();
-    const num = document.getElementById("phone").value.replace(/\D/g, "");
-    if (!num) { err.textContent = "Escribe tu número de teléfono."; return; }
-    if (num !== CH.demoPhone) { err.textContent = "Número no registrado. Usa la demo 7000-0000."; return; }
-    entrar();
-  });
+    if (!needTerms()) return;
 
-  document.querySelectorAll("[data-social]").forEach((b) =>
-    b.addEventListener("click", () => entrar(b.dataset.social))
-  );
+    if (mode === "phone") {
+      const num = document.getElementById("phone").value.replace(/\D/g, "");
+      if (!num) { err.textContent = "Escribe tu número de teléfono."; return; }
+      const user = Store.findUserByPhone(num);
+      if (!user) {
+        err.textContent = "Número no registrado. Usa la demo 7000-0000.";
+        return;
+      }
+      Store.loginAs(user.id, "phone");
+      finish(user, "teléfono");
+      return;
+    }
+
+    const email = document.getElementById("email").value.trim();
+    const pass = document.getElementById("password").value;
+    if (!email || !pass) {
+      err.textContent = "Escribe correo y contraseña.";
+      return;
+    }
+    let user = Store.findUserByEmail(email);
+    if (!user) {
+      // Primer acceso: registra cuenta demo asociada al correo
+      user = Store.registerUser({
+        name: email.split("@")[0].replace(/[._]/g, " ") || "Cliente",
+        email,
+        password: pass,
+        phone: "",
+        provider: "email",
+      });
+      Store.loginAs(user.id, "email");
+      finish(user, "correo (nueva cuenta)");
+      return;
+    }
+    if (user.password && user.password !== pass) {
+      err.textContent = "Contraseña incorrecta.";
+      return;
+    }
+    Store.loginAs(user.id, "email");
+    finish(user, "correo");
+  });
 
   document.getElementById("btn-guest").addEventListener("click", () => {
-    toast("Modo invitado: solo puedes ver la información");
+    toast("Modo invitado: puedes explorar, pero no agendar citas");
     setTimeout(() => (location.href = "index.html"), 800);
   });
+})();
 </script>
 </body>
 </html>

@@ -30,18 +30,42 @@ const CH = {
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-/* ---------- Sesión simulada ---------- */
+/* ---------- Sesión (delegada a Store cuando esté listo) ---------- */
 const session = {
   get on() {
+    if (window.Store) return Store.isLoggedIn();
     return localStorage.getItem("cathome_session") === "1";
   },
   start() {
     localStorage.setItem("cathome_session", "1");
   },
   end() {
-    localStorage.removeItem("cathome_session");
+    if (window.Store) Store.logout();
+    else localStorage.removeItem("cathome_session");
+  },
+  user() {
+    return window.Store ? Store.currentUser() : null;
   },
 };
+
+function loginRedirectTarget() {
+  const q = new URLSearchParams(location.search).get("next");
+  if (q && q.endsWith(".html") && !q.includes("://")) return q;
+  return "reserva-mascota.html";
+}
+
+function requireAuth() {
+  if (!document.body.hasAttribute("data-requires-auth")) return true;
+  if (session.on) return true;
+  const next = encodeURIComponent(
+    location.pathname.split("/").pop() + location.search
+  );
+  toast("Inicia sesión para continuar con tu cita");
+  setTimeout(() => {
+    location.href = `login.html?next=${next}`;
+  }, 500);
+  return false;
+}
 
 /* ---------- Sprite de iconos (line-art, estilo del diseño) ---------- */
 const SPRITE = `
@@ -145,9 +169,12 @@ function renderHeader() {
       `<a href="${n.href}"${n.key === active ? ' class="active"' : ""}>${n.label}</a>`
   ).join("");
 
+  const user = session.user();
+  const first = user ? user.name.split(" ")[0] : CH.userName.split(" ")[0];
   const right = session.on
-    ? `<span class="user-chip">¡Hola, ${CH.userName.split(" ")[0]}!</span>
-       <a class="btn btn-orange" href="reserva-mascota.html">Reserva tu cita</a>
+    ? `<span class="user-chip">¡Hola, ${first}!</span>
+       <a class="btn btn-orange" href="reserva-mascota.html" data-needs-login>Reserva tu cita</a>
+       <a class="btn btn-soft" href="mis-citas.html" data-needs-login>Mis citas</a>
        <button class="btn btn-soft" data-logout>Salir</button>`
     : `<a class="btn btn-orange" href="login.html">
          <svg class="ic"><use href="#i-user"/></svg> Iniciar sesión
@@ -381,8 +408,14 @@ function initHeroCta() {
   $("span", cta).textContent = "Agendar cita";
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  if (window.Store) await Store.init();
+  // Migración suave: sesión vieja sin auth → limpiar
+  if (localStorage.getItem("cathome_session") === "1" && window.Store && !Store.getAuth()) {
+    localStorage.removeItem("cathome_session");
+  }
   injectSprite();
+  if (!requireAuth()) return;
   renderHeader();
   initMobileNav();
   syncNavActive();

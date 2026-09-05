@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-booking="exito">
 
 <header class="site-header" data-header></header>
 
@@ -30,18 +30,17 @@
       <p>Te hemos enviado un correo con todos los detalles de tu cita.</p>
     </header>
 
-    <article class="ticket-card">
+    <article class="ticket-card" id="exitoDetails">
       <div class="ticket-top">
         <div class="ticket-code">
           <div class="label">
             <svg class="ic"><use href="#i-calendar"/></svg>
             Código de cita
           </div>
-          <div class="code">CH-2026-0924-001</div>
+          <div class="code" id="apptCode">—</div>
           <p class="hint">Guarda este comprobante para futuras consultas.</p>
         </div>
         <div class="ticket-qr">
-          <!-- QR decorativo (diseño); luego se genera con la lógica real -->
           <svg class="qr" viewBox="0 0 120 120" role="img" aria-label="Código QR de la cita">
             <rect width="120" height="120" fill="#fff"/>
             <g fill="#1a1a1a">
@@ -82,28 +81,28 @@
           <div class="detail-cell">
             <div class="k"><svg class="ic"><use href="#i-cat"/></svg> Tu mascota</div>
             <div class="pet">
-              <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
+              <img data-sum="pet-img" src="assets/gatos/GATO1.png" alt="">
               <div>
-                <strong>Misu</strong>
-                <small>Gato · Hembra · 2 años · 4 kg</small>
+                <strong data-sum="pet-name">—</strong>
+                <small data-sum="pet-meta"></small>
               </div>
             </div>
           </div>
 
           <div class="detail-cell">
             <div class="k"><svg class="ic"><use href="#i-calendar"/></svg> Fecha y hora</div>
-            <strong>Jueves, 24 de septiembre de 2026</strong>
+            <strong data-sum="date">—</strong>
             <small style="display:inline-flex;align-items:center;gap:6px;margin-top:6px">
               <svg class="ic" style="width:14px;height:14px;color:var(--green-mid)"><use href="#i-clock"/></svg>
-              10:00 a.m.
+              <span data-sum="time"></span>
             </small>
           </div>
 
           <div class="detail-cell">
             <div class="k"><svg class="ic"><use href="#i-stethoscope"/></svg> Servicio</div>
             <div class="row-price">
-              <strong>Esterilización felina</strong>
-              <span class="price">$55.00</span>
+              <strong data-sum="service">—</strong>
+              <span class="price" data-sum="price">—</span>
             </div>
           </div>
 
@@ -140,7 +139,7 @@
       <a class="btn-outline-green" href="index.html">
         <svg class="ic"><use href="#i-arrow-l"/></svg> Volver al inicio
       </a>
-      <a class="btn btn-green" href="servicios.html">
+      <a class="btn btn-green" href="mis-citas.html">
         Ver mis citas <svg class="ic"><use href="#i-arrow-r"/></svg>
       </a>
     </div>
@@ -148,6 +147,8 @@
 </main>
 
 <footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

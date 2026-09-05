@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-booking="confirma">
 
 <header class="site-header" data-header></header>
 
@@ -34,7 +34,7 @@
 
     <header class="book-hero">
       <div class="eyebrow">PASO 3 DE 4</div>
-      <h1><span class="script" style="color:var(--orange)">Confirma</span> tu cita
+      <h1><span class="script">Confirma</span> tu cita
         <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
       </h1>
       <p>Revisa que toda la información esté correcta antes de continuar con el pago.</p>
@@ -52,32 +52,32 @@
         <div class="ico"><svg class="ic"><use href="#i-paw-heart"/></svg></div>
         <div>
           <strong>
-            <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
-            Misu
+            <img data-sum="pet-img" src="assets/gatos/GATO1.png" alt="">
+            <span data-sum="pet-name">—</span>
           </strong>
-          <small>Gato · Hembra · 2 años · 4 kg</small>
+          <small data-sum="pet-meta"></small>
         </div>
       </div>
       <div class="sum-row">
         <div class="ico"><svg class="ic"><use href="#i-calendar"/></svg></div>
         <div>
-          <strong>Sábado, 16 de mayo de 2026</strong>
-          <small>10:00 a.m.</small>
+          <strong data-sum="date">—</strong>
+          <small data-sum="time"></small>
         </div>
       </div>
       <div class="sum-row">
         <div class="ico"><svg class="ic"><use href="#i-stethoscope"/></svg></div>
         <div>
-          <strong>Esterilización felina</strong>
+          <strong data-sum="service">Esterilización felina</strong>
           <small>Servicio seleccionado</small>
         </div>
-        <div class="price">$55.00</div>
+        <div class="price" data-sum="price">$55.00</div>
       </div>
       <div class="sum-row">
         <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
         <div>
-          <strong>María López</strong>
-          <small>+503 1234 5678 · maria.lopez@email.com</small>
+          <strong data-sum="owner">—</strong>
+          <small data-sum="owner-meta"></small>
         </div>
       </div>
 
@@ -99,6 +99,8 @@
 </main>
 
 <footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-booking="pago">
 
 <header class="site-header" data-header></header>
 
@@ -53,23 +53,23 @@
           </p>
           <div class="card-fields form-grid">
             <div class="field full">
-              <label>Número de tarjeta</label>
-              <input type="text" placeholder="ACCT-000035" inputmode="numeric">
+              <label for="cardNumber">Número de tarjeta</label>
+              <input id="cardNumber" type="text" placeholder="ACCT-000035" inputmode="numeric">
             </div>
             <div class="field">
-              <label>Fecha de expiración</label>
-              <input type="text" placeholder="MM / AA">
+              <label for="cardExp">Fecha de expiración</label>
+              <input id="cardExp" type="text" placeholder="MM / AA">
             </div>
             <div class="field">
-              <label>Código de seguridad</label>
-              <input type="text" placeholder="CVC">
+              <label for="cardCvc">Código de seguridad</label>
+              <input id="cardCvc" type="text" placeholder="CVC">
             </div>
             <div class="field full">
-              <label>Nombre del titular</label>
-              <input type="text" placeholder="Como aparece en la tarjeta">
+              <label for="cardHolder">Nombre del titular</label>
+              <input id="cardHolder" type="text" placeholder="Como aparece en la tarjeta">
             </div>
             <div class="full">
-              <a class="btn btn-green btn-block" href="reserva-exito.html" style="width:100%;justify-content:center">
+              <a class="btn btn-green btn-block" href="#" id="btn-pay" style="width:100%;justify-content:center">
                 Pagar y confirmar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
               </a>
             </div>
@@ -113,31 +113,31 @@
           <div class="ico"><svg class="ic"><use href="#i-paw-heart"/></svg></div>
           <div>
             <strong>
-              <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
-              Misu
+              <img data-sum="pet-img" src="assets/gatos/GATO1.png" alt="">
+              <span data-sum="pet-name">—</span>
             </strong>
-            <small>Gato · Hembra · 2 años · 4 kg</small>
+            <small data-sum="pet-meta"></small>
           </div>
         </div>
         <div class="sum-row">
           <div class="ico"><svg class="ic"><use href="#i-calendar"/></svg></div>
           <div>
-            <strong>Sábado, 16 de mayo de 2026</strong>
-            <small>10:00 a.m.</small>
+            <strong data-sum="date">—</strong>
+            <small data-sum="time"></small>
           </div>
         </div>
         <div class="sum-row">
           <div class="ico"><svg class="ic"><use href="#i-stethoscope"/></svg></div>
           <div>
-            <strong>Esterilización felina</strong>
+            <strong data-sum="service">Esterilización felina</strong>
           </div>
-          <div class="price">$55.00</div>
+          <div class="price" data-sum="price">$55.00</div>
         </div>
         <div class="sum-row">
           <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
           <div>
-            <strong>María López</strong>
-            <small>+503 1234 5678 · maria.lopez@email.com</small>
+            <strong data-sum="owner">—</strong>
+            <small data-sum="owner-meta"></small>
           </div>
         </div>
         <div class="secure-band">
@@ -151,7 +151,7 @@
       <a class="btn-outline-green" href="reserva-confirma.html">
         <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
       </a>
-      <a class="btn btn-orange" href="reserva-exito.html">
+      <a class="btn btn-orange" href="#" id="btn-confirm">
         Confirmar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
       </a>
     </div>
@@ -159,18 +159,8 @@
 </main>
 
 <footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
-<script>
-  const card = document.getElementById("payCard");
-  const cash = document.getElementById("payCash");
-  function setPay(mode) {
-    card.classList.toggle("on", mode === "card");
-    cash.classList.toggle("on", mode === "cash");
-    card.querySelector("input").checked = mode === "card";
-    cash.querySelector("input").checked = mode === "cash";
-  }
-  card.addEventListener("click", () => setPay("card"));
-  cash.addEventListener("click", () => setPay("cash"));
-</script>
+<script src="assets/booking.js"></script>
 </body>
 </html>

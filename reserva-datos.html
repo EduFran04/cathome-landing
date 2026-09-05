@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/styles.css">
 </head>
-<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva" data-requires-auth data-booking="datos">
 
 <header class="site-header" data-header></header>
 
@@ -58,36 +58,40 @@
         </div>
         <div class="form-grid">
           <div class="field">
-            <label>Nombre de tu mascota <span class="req">*</span></label>
-            <input type="text" placeholder="Ej. Misu" value="Misu">
+            <label for="petName">Nombre de tu mascota <span class="req">*</span></label>
+            <input id="petName" type="text" placeholder="Ej. Misu">
           </div>
           <div class="field">
-            <label>Especie <span class="req">*</span></label>
-            <select><option selected>Gato</option></select>
+            <label for="petSpecies">Especie <span class="req">*</span></label>
+            <select id="petSpecies"><option>Gato</option></select>
           </div>
           <div class="field">
             <label>Sexo <span class="req">*</span></label>
             <div class="sex-row">
-              <label><input type="radio" name="sex" checked> Hembra</label>
-              <label><input type="radio" name="sex"> Macho</label>
+              <label><input type="radio" name="sex" value="Hembra" checked> Hembra</label>
+              <label><input type="radio" name="sex" value="Macho"> Macho</label>
             </div>
           </div>
           <div class="field">
-            <label>Edad <span class="req">*</span></label>
-            <select>
+            <label for="petAge">Edad <span class="req">*</span></label>
+            <select id="petAge">
               <option value="">Selecciona la edad</option>
-              <option selected>2 años</option>
+              <option>6 meses</option>
               <option>1 año</option>
+              <option>2 años</option>
               <option>3 años</option>
+              <option>4 años</option>
+              <option>5 años</option>
+              <option>6+ años</option>
             </select>
           </div>
           <div class="field">
-            <label>Raza (opcional)</label>
-            <input type="text" placeholder="Ej. Siamés, Mestizo, etc.">
+            <label for="petBreed">Raza (opcional)</label>
+            <input id="petBreed" type="text" placeholder="Ej. Siamés, Mestizo, etc.">
           </div>
           <div class="field">
-            <label>Peso aproximado (opcional)</label>
-            <input type="text" placeholder="Ej. 4 kg" value="4 kg">
+            <label for="petWeight">Peso aproximado (opcional)</label>
+            <input id="petWeight" type="text" placeholder="Ej. 4 kg">
           </div>
         </div>
       </div>
@@ -103,33 +107,34 @@
       </div>
       <div class="form-grid">
         <div class="field full">
-          <label>Nombre completo <span class="req">*</span></label>
-          <input type="text" placeholder="Tu nombre completo" value="María López">
+          <label for="ownerName">Nombre completo <span class="req">*</span></label>
+          <input id="ownerName" type="text" placeholder="Tu nombre completo">
         </div>
         <div class="field">
-          <label>Teléfono <span class="req">*</span></label>
-          <input type="tel" placeholder="+503 6106 0204" value="+503 1234 5678">
+          <label for="ownerPhone">Teléfono <span class="req">*</span></label>
+          <input id="ownerPhone" type="tel" placeholder="+503 6106 0204">
         </div>
         <div class="field">
-          <label>Correo electrónico <span class="req">*</span></label>
-          <input type="email" placeholder="tucorreo@ejemplo.com" value="maria.lopez@email.com">
+          <label for="ownerEmail">Correo electrónico <span class="req">*</span></label>
+          <input id="ownerEmail" type="email" placeholder="tucorreo@ejemplo.com">
         </div>
         <div class="field full">
-          <label>Dirección (opcional)</label>
-          <input type="text" placeholder="Ej. Colonia Escalón, San Salvador">
+          <label for="ownerAddress">Dirección (opcional)</label>
+          <input id="ownerAddress" type="text" placeholder="Ej. Colonia Escalón, San Salvador">
         </div>
         <div class="field full">
-          <label>Observaciones (opcional)</label>
-          <textarea placeholder="Cuéntanos cualquier detalle importante sobre tu mascota..."></textarea>
+          <label for="petNotes">Observaciones (opcional)</label>
+          <textarea id="petNotes" placeholder="Cuéntanos cualquier detalle importante sobre tu mascota..."></textarea>
         </div>
       </div>
+      <p class="form-error" id="form-error"></p>
     </section>
 
     <div class="book-actions">
       <a class="btn-outline-green" href="reserva-mascota.html">
         <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
       </a>
-      <a class="btn btn-orange" href="reserva-fecha.html">
+      <a class="btn btn-orange" href="#" id="btn-next">
         Siguiente <svg class="ic"><use href="#i-arrow-r"/></svg>
       </a>
     </div>
@@ -137,6 +142,8 @@
 </main>
 
 <footer class="site-footer" data-footer></footer>
+<script src="assets/store.js"></script>
 <script src="assets/app.js"></script>
+<script src="assets/booking.js"></script>
 </body>
 </html>
