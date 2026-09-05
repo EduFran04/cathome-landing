@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Datos generales — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="reserva-mascota.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+      <div class="stepper" aria-label="Progreso de reserva">
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Mascota</span></div>
+        <div class="line on"></div>
+        <div class="st on"><span class="dot">2</span><span class="lab">Datos</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">3</span><span class="lab">Fecha</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">4</span><span class="lab">Pago</span></div>
+      </div>
+      <span style="width:72px"></span>
+    </div>
+
+    <header class="book-hero">
+      <div class="eyebrow">PASO 2 DE 4</div>
+      <h1>Datos <span class="script">generales</span>
+        <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
+      </h1>
+      <p>Cuéntanos un poco sobre tu mascota y sobre ti para brindarte la mejor atención.</p>
+    </header>
+
+    <section class="book-panel">
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-cat"/></svg></div>
+        <div>
+          <h2>Información de tu mascota</h2>
+          <p>Estos datos nos ayudan a personalizar su atención.</p>
+        </div>
+      </div>
+
+      <div class="datos-layout">
+        <div class="photo-add" role="button" tabindex="0">
+          <div>
+            <svg class="ic"><use href="#i-cat"/></svg>
+            Agregar foto<br>(opcional)
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Nombre de tu mascota <span class="req">*</span></label>
+            <input type="text" placeholder="Ej. Misu" value="Misu">
+          </div>
+          <div class="field">
+            <label>Especie <span class="req">*</span></label>
+            <select><option selected>Gato</option></select>
+          </div>
+          <div class="field">
+            <label>Sexo <span class="req">*</span></label>
+            <div class="sex-row">
+              <label><input type="radio" name="sex" checked> Hembra</label>
+              <label><input type="radio" name="sex"> Macho</label>
+            </div>
+          </div>
+          <div class="field">
+            <label>Edad <span class="req">*</span></label>
+            <select>
+              <option value="">Selecciona la edad</option>
+              <option selected>2 años</option>
+              <option>1 año</option>
+              <option>3 años</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Raza (opcional)</label>
+            <input type="text" placeholder="Ej. Siamés, Mestizo, etc.">
+          </div>
+          <div class="field">
+            <label>Peso aproximado (opcional)</label>
+            <input type="text" placeholder="Ej. 4 kg" value="4 kg">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="book-panel">
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
+        <div>
+          <h2>Información del dueño</h2>
+          <p>Necesitamos tus datos para la confirmación de la cita.</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field full">
+          <label>Nombre completo <span class="req">*</span></label>
+          <input type="text" placeholder="Tu nombre completo" value="María López">
+        </div>
+        <div class="field">
+          <label>Teléfono <span class="req">*</span></label>
+          <input type="tel" placeholder="+503 6106 0204" value="+503 1234 5678">
+        </div>
+        <div class="field">
+          <label>Correo electrónico <span class="req">*</span></label>
+          <input type="email" placeholder="tucorreo@ejemplo.com" value="maria.lopez@email.com">
+        </div>
+        <div class="field full">
+          <label>Dirección (opcional)</label>
+          <input type="text" placeholder="Ej. Colonia Escalón, San Salvador">
+        </div>
+        <div class="field full">
+          <label>Observaciones (opcional)</label>
+          <textarea placeholder="Cuéntanos cualquier detalle importante sobre tu mascota..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <div class="book-actions">
+      <a class="btn-outline-green" href="reserva-mascota.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
+      </a>
+      <a class="btn btn-orange" href="reserva-fecha.html">
+        Siguiente <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

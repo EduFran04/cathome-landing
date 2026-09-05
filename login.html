@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bienvenido a Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-fixed-width="1400" data-density="login">
+
+<main class="login-page">
+  <div class="login-wave top"></div>
+  <div class="login-wave"></div>
+
+  <!-- Huellitas decorativas -->
+  <div class="deco" style="left:6%;top:6%;width:52px">
+    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
+  </div>
+  <div class="deco" style="right:7%;top:16%;width:42px">
+    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
+  </div>
+  <div class="deco" style="right:9%;bottom:10%;width:46px">
+    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
+  </div>
+  <div class="deco" style="left:8%;bottom:8%;width:38px">
+    <svg viewBox="0 0 64 64" fill="#f8c9b6"><ellipse cx="32" cy="45" rx="15" ry="12"/><ellipse cx="12" cy="26" rx="7" ry="9"/><ellipse cx="25" cy="15" rx="6.5" ry="9"/><ellipse cx="41" cy="15" rx="6.5" ry="9"/><ellipse cx="53" cy="26" rx="7" ry="9"/></svg>
+  </div>
+
+  <section class="login-card">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M5 30 32 8l27 22" fill="none" stroke="#e2603a" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13 28.5h38V50a3 3 0 0 1-3 3H16a3 3 0 0 1-3-3V28.5Z" fill="#fff" stroke="#e2603a" stroke-width="3"/>
+        <path d="M23 41.5 24.6 34l4.7 3.4h5.4L39.4 34 41 41.5" fill="#f0a469"/>
+        <path d="M23 41.5c0 5.4 4 9 9 9s9-3.6 9-9Z" fill="#f0a469"/>
+        <circle cx="28.4" cy="44" r="1.5" fill="#41301f"/>
+        <circle cx="35.6" cy="44" r="1.5" fill="#41301f"/>
+      </svg>
+      <div>
+        <div class="name">Cat Home</div>
+        <div class="sub">VETERINARIA</div>
+      </div>
+    </div>
+
+    <h1>Bienvenido a Cat Home</h1>
+    <p class="welcome-sub">
+      Cuidamos a quienes más amas
+      <svg class="ic heart-orange" style="width:19px;height:19px"><use href="#i-heart"/></svg>
+    </p>
+
+    <div class="logo-ring">
+      <div class="ring-img">
+        <img src="assets/logo-cathome.png" alt="Cat Home Veterinaria">
+      </div>
+    </div>
+
+    <form class="login-stack" id="login-form" novalidate>
+      <button type="button" class="social-btn" data-social="Facebook">
+        <svg class="brandmark" viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="16" fill="#1877f2"/>
+          <path d="M20.2 20.6l.6-4.3h-4.1v-2.8c0-1.2.6-2.3 2.4-2.3h1.9V7.5s-1.7-.3-3.3-.3c-3.4 0-5.6 2-5.6 5.7v3.4H8.3v4.3h3.8V31a16 16 0 0 0 4.6 0v-10.4h3.5Z" fill="#fff"/>
+        </svg>
+        <span class="label">Continuar con Facebook</span>
+      </button>
+
+      <button type="button" class="social-btn" data-social="Google">
+        <svg class="brandmark" viewBox="0 0 48 48">
+          <path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.6l6.7-6.7C35.6 2.6 30.2.5 24 .5 14.6.5 6.5 5.9 2.6 13.7l7.8 6.1C12.3 14 17.6 9.5 24 9.5Z"/>
+          <path fill="#4285F4" d="M46.5 24.5c0-1.6-.15-3.2-.44-4.7H24v9h12.7c-.55 2.9-2.2 5.4-4.7 7l7.6 5.9c4.4-4.1 6.9-10.2 6.9-17.2Z"/>
+          <path fill="#FBBC05" d="M10.4 28.6a14.5 14.5 0 0 1 0-9.2l-7.8-6.1a24 24 0 0 0 0 21.4l7.8-6.1Z"/>
+          <path fill="#34A853" d="M24 47.5c6.2 0 11.5-2 15.3-5.6l-7.6-5.9c-2.1 1.4-4.8 2.3-7.7 2.3-6.4 0-11.7-4.5-13.6-10.3l-7.8 6.1C6.5 42.1 14.6 47.5 24 47.5Z"/>
+        </svg>
+        <span class="label">Continuar con Google</span>
+      </button>
+
+      <div class="or-divider">o continúa con</div>
+
+      <div class="phone-field">
+        <div class="cc">
+          <span class="flag">
+            <svg viewBox="0 0 30 20">
+              <rect width="30" height="20" fill="#0F47AF"/>
+              <rect y="6.7" width="30" height="6.6" fill="#fff"/>
+              <circle cx="15" cy="10" r="2.2" fill="#0F47AF" opacity=".7"/>
+            </svg>
+          </span>
+          <svg class="ic" style="width:14px;height:14px;color:#8a978f"><use href="#i-chevron"/></svg>
+          <span>+503</span>
+        </div>
+        <input id="phone" type="tel" inputmode="numeric" placeholder="Número de teléfono" autocomplete="tel">
+      </div>
+
+      <p class="form-error" id="login-error"></p>
+
+      <button class="btn btn-orange btn-block" type="submit" style="border-radius:14px;padding:15px">
+        Continuar
+      </button>
+
+      <button type="button" class="btn btn-outline-orange btn-block" id="btn-guest" style="border-radius:14px;padding:14px">
+        <svg class="ic"><use href="#i-user"/></svg> Continuar como invitado
+      </button>
+
+      <label class="terms-row">
+        <input type="checkbox" id="terms">
+        <span>Acepto los <a href="#">términos y condiciones</a></span>
+      </label>
+
+      <p class="secure-row">
+        <svg class="ic" style="width:15px;height:15px"><use href="#i-lock"/></svg>
+        Tus datos están protegidos
+      </p>
+      <p class="demo-hint">Cuenta demo registrada: <strong>7000-0000</strong></p>
+    </form>
+  </section>
+</main>
+
+<script src="assets/app.js"></script>
+<script>
+  const err = document.getElementById("login-error");
+
+  function entrar(via) {
+    if (!document.getElementById("terms").checked) {
+      err.textContent = "Debes aceptar los términos y condiciones.";
+      return;
+    }
+    session.start();
+    err.textContent = "";
+    toast(via ? `Sesión iniciada con ${via}` : "Sesión iniciada Â· " + CH.displayPhone);
+    setTimeout(() => (location.href = "reserva-mascota.html"), 700);
+  }
+
+  document.getElementById("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const num = document.getElementById("phone").value.replace(/\D/g, "");
+    if (!num) { err.textContent = "Escribe tu número de teléfono."; return; }
+    if (num !== CH.demoPhone) { err.textContent = "Número no registrado. Usa la demo 7000-0000."; return; }
+    entrar();
+  });
+
+  document.querySelectorAll("[data-social]").forEach((b) =>
+    b.addEventListener("click", () => entrar(b.dataset.social))
+  );
+
+  document.getElementById("btn-guest").addEventListener("click", () => {
+    toast("Modo invitado: solo puedes ver la información");
+    setTimeout(() => (location.href = "index.html"), 800);
+  });
+</script>
+</body>
+</html>

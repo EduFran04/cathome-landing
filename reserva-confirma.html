@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confirma tu cita — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="reserva-fecha.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+      <div class="stepper" aria-label="Progreso de reserva">
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Mascota</span></div>
+        <div class="line on"></div>
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Datos</span></div>
+        <div class="line on"></div>
+        <div class="st on"><span class="dot">3</span><span class="lab">Fecha</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">4</span><span class="lab">Pago</span></div>
+      </div>
+      <span style="width:72px"></span>
+    </div>
+
+    <header class="book-hero">
+      <div class="eyebrow">PASO 3 DE 4</div>
+      <h1><span class="script" style="color:var(--orange)">Confirma</span> tu cita
+        <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
+      </h1>
+      <p>Revisa que toda la información esté correcta antes de continuar con el pago.</p>
+    </header>
+
+    <section class="book-panel summary-card">
+      <div class="sum-head">
+        <h2>Resumen de la cita</h2>
+        <a class="edit" href="reserva-datos.html">
+          <svg class="ic" style="width:14px;height:14px"><use href="#i-clipboard"/></svg> Editar
+        </a>
+      </div>
+
+      <div class="sum-row">
+        <div class="ico"><svg class="ic"><use href="#i-paw-heart"/></svg></div>
+        <div>
+          <strong>
+            <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
+            Misu
+          </strong>
+          <small>Gato · Hembra · 2 años · 4 kg</small>
+        </div>
+      </div>
+      <div class="sum-row">
+        <div class="ico"><svg class="ic"><use href="#i-calendar"/></svg></div>
+        <div>
+          <strong>Sábado, 16 de mayo de 2026</strong>
+          <small>10:00 a.m.</small>
+        </div>
+      </div>
+      <div class="sum-row">
+        <div class="ico"><svg class="ic"><use href="#i-stethoscope"/></svg></div>
+        <div>
+          <strong>Esterilización felina</strong>
+          <small>Servicio seleccionado</small>
+        </div>
+        <div class="price">$55.00</div>
+      </div>
+      <div class="sum-row">
+        <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
+        <div>
+          <strong>María López</strong>
+          <small>+503 1234 5678 · maria.lopez@email.com</small>
+        </div>
+      </div>
+
+      <div class="secure-band">
+        <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-shield"/></svg>
+        Tu información está segura. Utilizamos protocolos de seguridad para proteger tus datos.
+      </div>
+    </section>
+
+    <div class="book-actions" style="max-width:720px;margin-left:auto;margin-right:auto">
+      <a class="btn-outline-green" href="reserva-fecha.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
+      </a>
+      <a class="btn btn-orange" href="reserva-pago.html">
+        Continuar al pago <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

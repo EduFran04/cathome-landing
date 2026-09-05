@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cita confirmada — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="index.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+    </div>
+
+    <header class="success-hero">
+      <div class="success-badge" aria-hidden="true">
+        <svg class="ic"><use href="#i-check"/></svg>
+      </div>
+      <h1>¡Cita <span class="script">confirmada</span>!</h1>
+      <p>Te hemos enviado un correo con todos los detalles de tu cita.</p>
+    </header>
+
+    <article class="ticket-card">
+      <div class="ticket-top">
+        <div class="ticket-code">
+          <div class="label">
+            <svg class="ic"><use href="#i-calendar"/></svg>
+            Código de cita
+          </div>
+          <div class="code">CH-2026-0924-001</div>
+          <p class="hint">Guarda este comprobante para futuras consultas.</p>
+        </div>
+        <div class="ticket-qr">
+          <!-- QR decorativo (diseño); luego se genera con la lógica real -->
+          <svg class="qr" viewBox="0 0 120 120" role="img" aria-label="Código QR de la cita">
+            <rect width="120" height="120" fill="#fff"/>
+            <g fill="#1a1a1a">
+              <rect x="8" y="8" width="34" height="34" rx="2"/>
+              <rect x="14" y="14" width="22" height="22" fill="#fff"/>
+              <rect x="20" y="20" width="10" height="10"/>
+              <rect x="78" y="8" width="34" height="34" rx="2"/>
+              <rect x="84" y="14" width="22" height="22" fill="#fff"/>
+              <rect x="90" y="20" width="10" height="10"/>
+              <rect x="8" y="78" width="34" height="34" rx="2"/>
+              <rect x="14" y="84" width="22" height="22" fill="#fff"/>
+              <rect x="20" y="90" width="10" height="10"/>
+              <rect x="50" y="12" width="8" height="8"/><rect x="62" y="12" width="8" height="8"/>
+              <rect x="50" y="24" width="8" height="8"/><rect x="62" y="28" width="8" height="8"/>
+              <rect x="50" y="50" width="8" height="8"/><rect x="62" y="50" width="8" height="8"/>
+              <rect x="74" y="50" width="8" height="8"/><rect x="86" y="50" width="8" height="8"/>
+              <rect x="98" y="50" width="8" height="8"/><rect x="50" y="62" width="8" height="8"/>
+              <rect x="74" y="62" width="8" height="8"/><rect x="98" y="62" width="8" height="8"/>
+              <rect x="50" y="74" width="8" height="8"/><rect x="62" y="86" width="8" height="8"/>
+              <rect x="74" y="74" width="8" height="8"/><rect x="86" y="86" width="8" height="8"/>
+              <rect x="98" y="74" width="8" height="8"/><rect x="98" y="98" width="8" height="8"/>
+              <rect x="74" y="98" width="8" height="8"/><rect x="50" y="98" width="8" height="8"/>
+            </g>
+          </svg>
+          <p>Presenta este código en clínica o muéstralo desde tu celular.</p>
+        </div>
+      </div>
+
+      <div class="ticket-perf" aria-hidden="true"></div>
+
+      <div class="ticket-body">
+        <h2 class="sec-title">
+          <svg class="ic"><use href="#i-calendar"/></svg>
+          Detalles de tu cita
+        </h2>
+
+        <div class="detail-grid">
+          <div class="detail-cell">
+            <div class="k"><svg class="ic"><use href="#i-cat"/></svg> Tu mascota</div>
+            <div class="pet">
+              <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
+              <div>
+                <strong>Misu</strong>
+                <small>Gato · Hembra · 2 años · 4 kg</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-cell">
+            <div class="k"><svg class="ic"><use href="#i-calendar"/></svg> Fecha y hora</div>
+            <strong>Jueves, 24 de septiembre de 2026</strong>
+            <small style="display:inline-flex;align-items:center;gap:6px;margin-top:6px">
+              <svg class="ic" style="width:14px;height:14px;color:var(--green-mid)"><use href="#i-clock"/></svg>
+              10:00 a.m.
+            </small>
+          </div>
+
+          <div class="detail-cell">
+            <div class="k"><svg class="ic"><use href="#i-stethoscope"/></svg> Servicio</div>
+            <div class="row-price">
+              <strong>Esterilización felina</strong>
+              <span class="price">$55.00</span>
+            </div>
+          </div>
+
+          <div class="detail-cell">
+            <div class="k"><svg class="ic"><use href="#i-pin"/></svg> Ubicación</div>
+            <strong>Colonia Escalón, San Salvador</strong>
+            <a class="maps-btn" href="https://maps.google.com/?q=Colonia+Escalon+San+Salvador" target="_blank" rel="noopener">
+              Ver en Google Maps <svg class="ic" style="width:14px;height:14px"><use href="#i-arrow-r"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="tips-box">
+          <div class="tips-head">
+            <svg class="ic" style="color:var(--green-mid)"><use href="#i-question"/></svg>
+            Indicaciones importantes
+          </div>
+          <ul>
+            <li>Llegar con 10 minutos de anticipación.</li>
+            <li>Si tu gato está en tratamiento, informa al personal.</li>
+            <li>Te recomendamos traerlo en un transportador seguro.</li>
+            <li>Para cualquier cambio, comunícate al +503 6106 0204.</li>
+          </ul>
+        </div>
+
+        <div class="secure-band" style="margin-top:14px">
+          <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-shield"/></svg>
+          <span><b>Tu información está segura.</b> Utilizamos protocolos de seguridad para proteger tus datos.</span>
+        </div>
+      </div>
+    </article>
+
+    <div class="book-actions" style="max-width:760px;margin-left:auto;margin-right:auto">
+      <a class="btn-outline-green" href="index.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver al inicio
+      </a>
+      <a class="btn btn-green" href="servicios.html">
+        Ver mis citas <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+</body>
+</html>

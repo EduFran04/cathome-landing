@@ -1,0 +1,96 @@
+{
+  "users": [
+    {
+      "id": "u_demo",
+      "name": "María José",
+      "phone": "70000000",
+      "email": "maria@cathome.demo",
+      "password": "demo123",
+      "address": "Colonia Escalón, San Salvador",
+      "provider": "phone",
+      "createdAt": "2026-01-10T10:00:00.000Z"
+    },
+    {
+      "id": "u_google",
+      "name": "Ana Gómez",
+      "phone": "71000000",
+      "email": "ana.gomez@gmail.com",
+      "password": "",
+      "address": "",
+      "provider": "google",
+      "createdAt": "2026-02-01T10:00:00.000Z"
+    },
+    {
+      "id": "u_facebook",
+      "name": "Carlos Rivera",
+      "phone": "72000000",
+      "email": "carlos.rivera@facebook.com",
+      "password": "",
+      "address": "",
+      "provider": "facebook",
+      "createdAt": "2026-02-15T10:00:00.000Z"
+    }
+  ],
+  "pets": [
+    {
+      "id": "p_misu",
+      "userId": "u_demo",
+      "name": "Misu",
+      "species": "Gato",
+      "sex": "Hembra",
+      "age": "2 años",
+      "breed": "Mestizo",
+      "weight": "4 kg",
+      "photo": "assets/gatos/GATO7.png",
+      "photoFallback": "assets/gatos/GATO1.png",
+      "notes": ""
+    },
+    {
+      "id": "p_luna",
+      "userId": "u_demo",
+      "name": "Luna",
+      "species": "Gato",
+      "sex": "Hembra",
+      "age": "3 años",
+      "breed": "Siamés",
+      "weight": "3.5 kg",
+      "photo": "assets/gatos/GATO8.png",
+      "photoFallback": "assets/gatos/GATO2.png",
+      "notes": ""
+    },
+    {
+      "id": "p_simba",
+      "userId": "u_demo",
+      "name": "Simba",
+      "species": "Gato",
+      "sex": "Macho",
+      "age": "1 año",
+      "breed": "Mestizo",
+      "weight": "4.2 kg",
+      "photo": "assets/gatos/GATO9.png",
+      "photoFallback": "assets/gatos/GATO3.png",
+      "notes": ""
+    },
+    {
+      "id": "p_nube",
+      "userId": "u_google",
+      "name": "Nube",
+      "species": "Gato",
+      "sex": "Hembra",
+      "age": "4 años",
+      "breed": "Persa",
+      "weight": "3.8 kg",
+      "photo": "assets/gatos/GATO10.png",
+      "photoFallback": "assets/gatos/GATO4.png",
+      "notes": ""
+    }
+  ],
+  "appointments": [],
+  "services": [
+    {
+      "id": "svc_esterilizacion",
+      "name": "Esterilización felina",
+      "price": 55
+    }
+  ]
+}

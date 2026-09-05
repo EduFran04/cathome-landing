@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mis citas — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="" data-fixed-width="1400">
+
+<header class="site-header" data-header></header>
+
+<nav class="crumbs">
+  <a href="index.html">Inicio</a><span class="sep">›</span><b>Mis citas</b>
+</nav>
+
+<section class="detail">
+  <div class="wrap">
+    <h1 class="page-title" style="display:block">
+      Reserva y <span class="script">reprogramación</span>
+      <span class="sparkle"><svg viewBox="0 0 12 24"><use href="#i-spark"/></svg></span>
+    </h1>
+    <p class="page-lead">Agenda la cita de tu gato o cambia la fecha de una cita ya confirmada.</p>
+
+    <!-- Sin sesión -->
+    <div id="locked" class="lock-box hidden" style="margin-top:32px">
+      <svg class="ic" style="width:44px;height:44px;color:var(--green-mid);margin:0 auto"><use href="#i-lock"/></svg>
+      <p>Necesitas iniciar sesión con tu número registrado<br>para agendar o reprogramar.</p>
+      <a class="btn btn-orange" href="login.html">
+        <svg class="ic"><use href="#i-user"/></svg> Iniciar sesión
+      </a>
+    </div>
+
+    <!-- Con sesión -->
+    <div id="app" class="hidden">
+      <div class="booking">
+        <aside class="steps-nav" id="steps">
+          <div class="step-item on" data-step="1"><span class="n">1</span> Elige el servicio</div>
+          <div class="step-item" data-step="2"><span class="n">2</span> Fecha y hora</div>
+          <div class="step-item" data-step="3"><span class="n">3</span> Datos del gato</div>
+          <div class="step-item" data-step="4"><span class="n">4</span> Confirma y paga</div>
+        </aside>
+
+        <div class="card-panel">
+          <!-- Paso 1 -->
+          <div data-panel="1">
+            <h3>1. Elige el servicio</h3>
+            <div class="svc-option on" data-svc="Esterilización hembra" data-price="55.00">
+              <div><strong>Esterilización hembra</strong><small>Incluye monitoreo anestésico</small></div>
+              <span class="price">$55.00</span>
+            </div>
+            <div class="svc-option" data-svc="Esterilización macho" data-price="40.00">
+              <div><strong>Esterilización macho</strong><small>Procedimiento ambulatorio</small></div>
+              <span class="price">$40.00</span>
+            </div>
+            <div class="svc-option" data-svc="Consulta preoperatoria" data-price="20.00">
+              <div><strong>Consulta preoperatoria</strong><small>Evaluación antes de cirugía</small></div>
+              <span class="price">$20.00</span>
+            </div>
+            <div style="text-align:right;margin-top:14px">
+              <button class="btn btn-orange" data-go="2">Continuar <svg class="ic"><use href="#i-arrow-r"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Paso 2 -->
+          <div data-panel="2" class="hidden">
+            <h3>2. Selecciona fecha y hora</h3>
+            <div class="cal-wrap">
+              <div>
+                <div class="cal-head">
+                  <button type="button" id="prev-month"><svg class="ic ic-sm"><use href="#i-arrow-l"/></svg></button>
+                  <span id="cal-label">Mayo 2026</span>
+                  <button type="button" id="next-month"><svg class="ic ic-sm"><use href="#i-arrow-r"/></svg></button>
+                </div>
+                <div class="cal-grid" id="cal"></div>
+              </div>
+              <div>
+                <p style="font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:8px">Horas disponibles</p>
+                <div id="times">
+                  <button type="button" class="time-slot" data-time="8:00 a.m.">8:00 a.m.</button>
+                  <button type="button" class="time-slot on" data-time="10:00 a.m.">10:00 a.m.</button>
+                  <button type="button" class="time-slot" data-time="12:00 p.m.">12:00 p.m.</button>
+                  <button type="button" class="time-slot" data-time="3:00 p.m.">3:00 p.m.</button>
+                  <button type="button" class="time-slot" data-time="5:00 p.m.">5:00 p.m.</button>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:16px">
+              <button class="btn btn-soft" data-go="1"><svg class="ic"><use href="#i-arrow-l"/></svg> Atrás</button>
+              <button class="btn btn-orange" data-go="3">Continuar <svg class="ic"><use href="#i-arrow-r"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Paso 3 -->
+          <div data-panel="3" class="hidden">
+            <h3>3. Datos del tutor y del gato</h3>
+            <div class="form-field"><label>Nombre del tutor</label><input id="tutor" value="María José"></div>
+            <div class="form-field"><label>Celular registrado</label><input value="+503 7000-0000" readonly></div>
+            <div class="form-field"><label>Nombre del gato</label><input id="gato" value="Luna"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:6px">
+              <button class="btn btn-soft" data-go="2"><svg class="ic"><use href="#i-arrow-l"/></svg> Atrás</button>
+              <button class="btn btn-orange" data-go="4">Continuar <svg class="ic"><use href="#i-arrow-r"/></svg></button>
+            </div>
+          </div>
+
+          <!-- Paso 4 -->
+          <div data-panel="4" class="hidden">
+            <h3>4. Confirma y elige cómo pagar</h3>
+            <div class="summary" id="resumen"></div>
+            <div class="pay-grid">
+              <div class="pay-card rec">
+                <span class="tag">Recomendado</span>
+                <h4>Paga en línea</h4>
+                <div class="amount" id="monto">$55.00</div>
+                <ul>
+                  <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Asegura tu cita al instante</li>
+                  <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Confirmación a tu celular</li>
+                </ul>
+                <button class="btn btn-orange btn-block" id="pagar">Pagar ahora</button>
+              </div>
+              <div class="pay-card">
+                <h4>Paga el día de la cita</h4>
+                <div class="amount">Reserva</div>
+                <ul>
+                  <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Sin pagar ahora</li>
+                  <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Pagas en la clínica</li>
+                </ul>
+                <button class="btn btn-green btn-block" id="reservar">Reservar ahora</button>
+              </div>
+            </div>
+            <div style="margin-top:14px">
+              <button class="btn btn-soft" data-go="3"><svg class="ic"><use href="#i-arrow-l"/></svg> Atrás</button>
+            </div>
+          </div>
+
+          <!-- Confirmación -->
+          <div data-panel="ok" class="hidden">
+            <div class="success-box">
+              <div class="ring-ok"><svg class="ic ic-lg"><use href="#i-check"/></svg></div>
+              <h3>¡Cita confirmada!</h3>
+              <p id="ok-msg" style="color:var(--muted);font-size:.92rem;margin:8px 0 18px"></p>
+              <p style="color:var(--muted);font-size:.85rem;max-width:44ch;margin:0 auto 18px">
+                WhatsApp funciona como <b>atención al cliente</b> (dudas, horarios, preparación).
+                Para cambiar la cita usa la sección de reprogramación.
+              </p>
+              <a class="btn btn-wa" href="#" data-wa>
+                <svg class="ic"><use href="#i-wa"/></svg> WhatsApp atención
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card-panel" style="background:var(--green-soft-2);border:none">
+          <h3>Tu selección</h3>
+          <div class="summary" style="background:#fff" id="lateral"></div>
+          <p style="font-size:.78rem;color:var(--muted);margin-top:14px">
+            Te avisaremos al <b>+503 7000-0000</b>.
+          </p>
+        </aside>
+      </div>
+
+      <!-- Reprogramación -->
+      <h2 style="margin-top:48px;font-size:1.3rem;color:var(--green-deep)">Reprogramar una cita</h2>
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:16px">Cambia la fecha u hora de tus citas confirmadas.</p>
+      <div id="lista-citas" style="max-width:680px"></div>
+
+      <div class="card-panel hidden" id="rs-panel" style="max-width:680px;margin-top:16px">
+        <h3>Nueva fecha para <span id="rs-label"></span></h3>
+        <div class="form-field"><label>Nueva fecha</label><input type="date" id="rs-fecha" value="2026-05-23"></div>
+        <div class="form-field">
+          <label>Nueva hora</label>
+          <select id="rs-hora">
+            <option>8:00 a.m.</option><option selected>10:00 a.m.</option>
+            <option>12:00 p.m.</option><option>3:00 p.m.</option><option>5:00 p.m.</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn btn-orange" id="rs-ok">Confirmar reprogramación</button>
+          <button class="btn btn-soft" id="rs-cancel">Cancelar</button>
+        </div>
+      </div>
+
+      <div class="callout sage" style="margin-top:40px">
+        <img class="line-cat" src="assets/gatos/GATO2.png" alt="">
+        <svg class="ic heart-orange" style="width:22px;height:22px;margin-left:-14px"><use href="#i-heart"/></svg>
+        <p>¿Dudas antes de la cita? Escríbenos por WhatsApp,<br><b>estamos aquí para ayudarte.</b></p>
+        <a class="btn btn-wa" style="margin-left:auto" href="#" data-wa>
+          <svg class="ic"><use href="#i-wa"/></svg> WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" data-footer></footer>
+
+<script src="assets/app.js"></script>
+<script>
+const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const st = {
+  paso: 1, servicio: "Esterilización hembra", precio: "55.00",
+  dia: 16, mes: 4, anio: 2026, hora: "10:00 a.m.", editando: null,
+  citas: [{ id: 1, titulo: "Esterilización hembra Â· Luna", cuando: "16 mayo 2026 Â· 10:00 a.m.", estado: "Confirmada" }]
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById(session.on ? "app" : "locked").classList.remove("hidden");
+  if (!session.on) return;
+
+  document.querySelectorAll("[data-wa]").forEach(a => a.href = CH.whatsapp);
+  document.querySelectorAll("[data-wa]").forEach(a => { a.target = "_blank"; a.rel = "noopener"; });
+
+  document.querySelectorAll(".svc-option").forEach(op =>
+    op.addEventListener("click", () => {
+      document.querySelectorAll(".svc-option").forEach(o => o.classList.remove("on"));
+      op.classList.add("on");
+      st.servicio = op.dataset.svc;
+      st.precio = op.dataset.price;
+      pintarResumen();
+    })
+  );
+
+  document.querySelectorAll("[data-go]").forEach(b =>
+    b.addEventListener("click", () => irPaso(b.dataset.go))
+  );
+
+  document.getElementById("prev-month").addEventListener("click", () => {
+    st.mes--; if (st.mes < 0) { st.mes = 11; st.anio--; } pintarCal();
+  });
+  document.getElementById("next-month").addEventListener("click", () => {
+    st.mes++; if (st.mes > 11) { st.mes = 0; st.anio++; } pintarCal();
+  });
+
+  document.querySelectorAll(".time-slot").forEach(t =>
+    t.addEventListener("click", () => {
+      document.querySelectorAll(".time-slot").forEach(x => x.classList.remove("on"));
+      t.classList.add("on");
+      st.hora = t.dataset.time;
+      pintarResumen();
+    })
+  );
+
+  document.getElementById("pagar").addEventListener("click", () => confirmar(true));
+  document.getElementById("reservar").addEventListener("click", () => confirmar(false));
+  document.getElementById("rs-cancel").addEventListener("click", () => {
+    document.getElementById("rs-panel").classList.add("hidden");
+    st.editando = null;
+  });
+  document.getElementById("rs-ok").addEventListener("click", () => {
+    const cita = st.citas.find(c => c.id === st.editando);
+    if (!cita) return;
+    const [a, m, d] = document.getElementById("rs-fecha").value.split("-").map(Number);
+    cita.cuando = `${d} ${MESES[m - 1].toLowerCase()} ${a} Â· ${document.getElementById("rs-hora").value}`;
+    cita.estado = "Reprogramada";
+    document.getElementById("rs-panel").classList.add("hidden");
+    pintarCitas();
+    toast("Cita reprogramada Â· Aviso enviado al " + CH.displayPhone);
+  });
+
+  pintarCal(); pintarResumen(); pintarCitas();
+});
+
+function irPaso(n) {
+  st.paso = n;
+  document.querySelectorAll("[data-panel]").forEach(p =>
+    p.classList.toggle("hidden", p.dataset.panel !== String(n))
+  );
+  document.querySelectorAll(".step-item").forEach(s =>
+    s.classList.toggle("on", s.dataset.step === String(n))
+  );
+  pintarResumen();
+}
+
+function pintarCal() {
+  document.getElementById("cal-label").textContent = MESES[st.mes] + " " + st.anio;
+  const cal = document.getElementById("cal");
+  let html = ["Do","Lu","Ma","Mi","Ju","Vi","Sá"].map(d => `<div class="dow">${d}</div>`).join("");
+  const inicio = new Date(st.anio, st.mes, 1).getDay();
+  const total = new Date(st.anio, st.mes + 1, 0).getDate();
+  for (let i = 0; i < inicio; i++) html += "<div></div>";
+  for (let d = 1; d <= total; d++)
+    html += `<button type="button" class="day${d === st.dia ? " on" : ""}" data-d="${d}">${d}</button>`;
+  cal.innerHTML = html;
+  cal.querySelectorAll(".day").forEach(b =>
+    b.addEventListener("click", () => { st.dia = +b.dataset.d; pintarCal(); pintarResumen(); })
+  );
+}
+
+function fechaTexto() {
+  return `${st.dia} ${MESES[st.mes].toLowerCase()} ${st.anio}`;
+}
+
+function pintarResumen() {
+  const html = `<dl>
+    <dt>Servicio</dt><dd>${st.servicio}</dd>
+    <dt>Fecha</dt><dd>${fechaTexto()}</dd>
+    <dt>Hora</dt><dd>${st.hora}</dd>
+    <dt>Total</dt><dd>$${st.precio}</dd>
+  </dl>`;
+  document.getElementById("lateral").innerHTML = html;
+  document.getElementById("resumen").innerHTML = html;
+  document.getElementById("monto").textContent = "$" + st.precio;
+}
+
+function confirmar(pagado) {
+  const gato = document.getElementById("gato").value || "Luna";
+  st.citas.unshift({
+    id: Date.now(),
+    titulo: `${st.servicio} Â· ${gato}`,
+    cuando: `${fechaTexto()} Â· ${st.hora}`,
+    estado: pagado ? "Pagada" : "Reservada"
+  });
+  document.getElementById("ok-msg").textContent = pagado
+    ? `Pago simulado correcto. ${st.servicio} el ${fechaTexto()} a las ${st.hora}.`
+    : `Reserva hecha. Pagas $${st.precio} el día de la cita (${fechaTexto()}, ${st.hora}).`;
+  irPaso("ok");
+  pintarCitas();
+  toast(pagado ? "Pago simulado exitoso" : "Cita reservada");
+}
+
+function pintarCitas() {
+  const cont = document.getElementById("lista-citas");
+  cont.innerHTML = st.citas.map(c => `
+    <div class="appt-card">
+      <div>
+        <strong>${c.titulo}</strong>
+        <div class="meta">${c.cuando}</div>
+      </div>
+      <span class="state">${c.estado}</span>
+      <button class="btn btn-orange" data-rs="${c.id}">Reprogramar</button>
+    </div>`).join("");
+  cont.querySelectorAll("[data-rs]").forEach(b =>
+    b.addEventListener("click", () => {
+      st.editando = +b.dataset.rs;
+      const cita = st.citas.find(c => c.id === st.editando);
+      document.getElementById("rs-label").textContent = cita.titulo;
+      document.getElementById("rs-panel").classList.remove("hidden");
+      document.getElementById("rs-panel").scrollIntoView({ behavior: "smooth", block: "center" });
+    })
+  );
+}
+</script>
+</body>
+</html>

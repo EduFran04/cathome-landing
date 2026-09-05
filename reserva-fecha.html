@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fecha y hora — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="reserva-datos.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+      <div class="stepper" aria-label="Progreso de reserva">
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Mascota</span></div>
+        <div class="line on"></div>
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Datos</span></div>
+        <div class="line on"></div>
+        <div class="st on"><span class="dot">3</span><span class="lab">Fecha</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">4</span><span class="lab">Pago</span></div>
+      </div>
+      <span style="width:72px"></span>
+    </div>
+
+    <header class="book-hero">
+      <div class="eyebrow">PASO 3 DE 4</div>
+      <h1>Selecciona la <span class="script">fecha y hora</span>
+        <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
+      </h1>
+      <p>Elige el día y la hora que mejor se adapten a ti. Mostramos solo los horarios disponibles.</p>
+    </header>
+
+    <div class="fecha-layout">
+      <section class="book-panel book-cal">
+        <div class="panel-head">
+          <div class="ico"><svg class="ic"><use href="#i-calendar"/></svg></div>
+          <div>
+            <h2>Selecciona una fecha</h2>
+            <p>Mayo 2026</p>
+          </div>
+        </div>
+        <div class="cal-head">
+          <button type="button" aria-label="Mes anterior">‹</button>
+          <span>Mayo 2026</span>
+          <button type="button" aria-label="Mes siguiente">›</button>
+        </div>
+        <div class="cal-grid" id="calGrid">
+          <div class="dow">Lu</div><div class="dow">Ma</div><div class="dow">Mi</div><div class="dow">Ju</div><div class="dow">Vi</div><div class="dow">Sa</div><div class="dow">Do</div>
+          <button type="button" class="day off">27</button>
+          <button type="button" class="day off">28</button>
+          <button type="button" class="day off">29</button>
+          <button type="button" class="day off">30</button>
+          <button type="button" class="day avail">1</button>
+          <button type="button" class="day avail">2</button>
+          <button type="button" class="day off">3</button>
+          <button type="button" class="day avail">4</button>
+          <button type="button" class="day avail">5</button>
+          <button type="button" class="day avail">6</button>
+          <button type="button" class="day avail">7</button>
+          <button type="button" class="day avail">8</button>
+          <button type="button" class="day avail">9</button>
+          <button type="button" class="day off">10</button>
+          <button type="button" class="day avail">11</button>
+          <button type="button" class="day avail">12</button>
+          <button type="button" class="day avail">13</button>
+          <button type="button" class="day avail">14</button>
+          <button type="button" class="day avail">15</button>
+          <button type="button" class="day avail on">16</button>
+          <button type="button" class="day off">17</button>
+          <button type="button" class="day avail">18</button>
+          <button type="button" class="day avail">19</button>
+          <button type="button" class="day avail">20</button>
+          <button type="button" class="day avail">21</button>
+          <button type="button" class="day avail">22</button>
+          <button type="button" class="day avail">23</button>
+          <button type="button" class="day off">24</button>
+          <button type="button" class="day avail">25</button>
+          <button type="button" class="day avail">26</button>
+          <button type="button" class="day avail">27</button>
+          <button type="button" class="day avail">28</button>
+          <button type="button" class="day avail">29</button>
+          <button type="button" class="day avail">30</button>
+          <button type="button" class="day off">31</button>
+        </div>
+        <div class="cal-legend">
+          <span><i class="a"></i> Día disponible</span>
+          <span><i class="s"></i> Fecha seleccionada</span>
+          <span><i class="n"></i> No disponible</span>
+        </div>
+      </section>
+
+      <section class="book-panel">
+        <div class="panel-head">
+          <div class="ico"><svg class="ic"><use href="#i-clock"/></svg></div>
+          <div>
+            <h2>Selecciona un horario</h2>
+            <p>Horarios disponibles para el Sábado, 16 de mayo de 2026.</p>
+          </div>
+        </div>
+        <div class="slots-grid" id="slots">
+          <button type="button" class="slot-btn">8:00 a.m.</button>
+          <button type="button" class="slot-btn">8:30 a.m.</button>
+          <button type="button" class="slot-btn">9:00 a.m.</button>
+          <button type="button" class="slot-btn">9:30 a.m.</button>
+          <button type="button" class="slot-btn on">10:00 a.m.</button>
+          <button type="button" class="slot-btn">10:30 a.m.</button>
+          <button type="button" class="slot-btn">11:00 a.m.</button>
+          <button type="button" class="slot-btn">11:30 a.m.</button>
+          <button type="button" class="slot-btn">2:00 p.m.</button>
+          <button type="button" class="slot-btn">2:30 p.m.</button>
+        </div>
+        <div class="info-note">
+          <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-question"/></svg>
+          <span><b>Información importante:</b> Te recomendamos llegar 10 minutos antes de tu cita para un mejor servicio.</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="book-actions">
+      <a class="btn-outline-green" href="reserva-datos.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
+      </a>
+      <a class="btn btn-orange" href="reserva-confirma.html">
+        Siguiente <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+<script>
+  document.querySelectorAll("#calGrid .day.avail").forEach((d) => {
+    d.addEventListener("click", () => {
+      document.querySelectorAll("#calGrid .day").forEach((x) => x.classList.remove("on"));
+      d.classList.add("on");
+    });
+  });
+  document.querySelectorAll("#slots .slot-btn").forEach((s) => {
+    s.addEventListener("click", () => {
+      document.querySelectorAll("#slots .slot-btn").forEach((x) => x.classList.remove("on"));
+      s.classList.add("on");
+    });
+  });
+</script>
+</body>
+</html>

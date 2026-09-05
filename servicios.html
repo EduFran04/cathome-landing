@@ -1,0 +1,234 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Servicios — Cat Home Veterinaria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1280" data-density="oferta">
+
+<header class="site-header" data-header></header>
+
+<section class="offer-hero">
+  <div class="deco" style="right:1%;top:6%;width:12%">
+    <svg viewBox="0 0 120 200" class="leaf" fill="none" stroke="currentColor" stroke-width="3">
+      <path d="M60 195V40"/>
+      <path d="M60 80c-24-4-38-20-40-44 26-2 40 14 40 44Z" fill="currentColor" opacity=".5" stroke="none"/>
+      <path d="M60 120c24-4 38-20 40-44-26-2-40 14-40 44Z" fill="currentColor" opacity=".5" stroke="none"/>
+    </svg>
+  </div>
+  <div class="wrap offer-hero-grid">
+    <div>
+      <h1>En Cat Home, cuidamos a quienes
+        <span class="script">más amas</span>
+        <svg class="ic heart-orange"><use href="#i-heart"/></svg>
+      </h1>
+      <p class="page-lead">
+        Clínica 100% especializada en felinos. Agenda la esterilización
+        de tu gato con protocolos seguros y un equipo que ama lo que hace.
+      </p>
+      <div class="offer-pills">
+        <span><svg class="ic"><use href="#i-cat"/></svg> Atención 100% felina</span>
+        <span><svg class="ic"><use href="#i-heart-pulse"/></svg> Monitoreo anestésico</span>
+        <span><svg class="ic"><use href="#i-quiet"/></svg> Instalaciones silenciosas</span>
+      </div>
+      <a class="btn btn-orange btn-lg" href="reserva-mascota.html" data-needs-login>
+        Reserva la cita de tu gato <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+    <div class="offer-art">
+      <div class="blob"></div>
+      <img class="cat" src="assets/gatos/GATO3.png" alt="Gato en Cat Home">
+      <div class="hero-badge">
+        <svg class="ic heart-orange"><use href="#i-heart"/></svg>
+        Más de 3,000 gatos atendidos con amor
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div><svg class="ic"><use href="#i-cat"/></svg> Especialistas en felinos</div>
+  <div><svg class="ic"><use href="#i-shield"/></svg> Protocolos seguros y certificados</div>
+  <div><svg class="ic"><use href="#i-star"/></svg> +500 reseñas positivas</div>
+  <div><svg class="ic"><use href="#i-pin"/></svg> Ubicados en San Salvador</div>
+</div>
+
+<section class="offer-book" id="reserva">
+  <div class="wrap">
+    <header class="book-head">
+      <h2>Reserva la cita
+        <span class="script">en pocos pasos</span>
+      </h2>
+      <p>Elige el servicio, la fecha y confirma. Puedes pagar en línea o el día de la cita.</p>
+    </header>
+
+    <div class="book-board">
+      <aside class="steps-nav">
+        <div class="step-item on" data-step="1"><span class="n">1</span> Elige el servicio</div>
+        <div class="step-item" data-step="2"><span class="n">2</span> Selecciona fecha y hora</div>
+        <div class="step-item" data-step="3"><span class="n">3</span> Completa los datos</div>
+        <div class="step-item" data-step="4"><span class="n">4</span> Confirma y paga</div>
+      </aside>
+
+      <div class="card-panel">
+        <h3>Servicios disponibles</h3>
+        <button type="button" class="svc-option on" data-svc="Esterilización hembra" data-price="55.00">
+          <div><strong>Esterilización hembra</strong><small>Incluye monitoreo anestésico</small></div>
+          <span class="price">desde $55.00</span>
+        </button>
+        <button type="button" class="svc-option" data-svc="Esterilización macho" data-price="40.00">
+          <div><strong>Esterilización macho</strong><small>Procedimiento ambulatorio</small></div>
+          <span class="price">desde $40.00</span>
+        </button>
+        <button type="button" class="svc-option" data-svc="Consulta preoperatoria" data-price="20.00">
+          <div><strong>Consulta preoperatoria</strong><small>Evaluación antes de cirugía</small></div>
+          <span class="price">$20.00</span>
+        </button>
+      </div>
+
+      <div class="card-panel cal-panel">
+        <div class="cal-head">
+          <button type="button" id="prev-m" aria-label="Mes anterior"><svg class="ic ic-sm"><use href="#i-arrow-l"/></svg></button>
+          <span id="cal-label">Mayo 2026</span>
+          <button type="button" id="next-m" aria-label="Mes siguiente"><svg class="ic ic-sm"><use href="#i-arrow-r"/></svg></button>
+        </div>
+        <div class="cal-grid" id="cal"></div>
+        <p class="slots-label">Horas disponibles</p>
+        <div class="time-row" id="times">
+          <button type="button" class="time-slot on" data-time="9:00 a.m.">9:00 a.m.</button>
+          <button type="button" class="time-slot" data-time="10:00 a.m.">10:00 a.m.</button>
+          <button type="button" class="time-slot" data-time="12:00 p.m.">12:00 p.m.</button>
+          <button type="button" class="time-slot" data-time="3:00 p.m.">3:00 p.m.</button>
+        </div>
+        <a class="btn btn-orange btn-block" href="reserva-mascota.html" data-needs-login style="margin-top:14px">
+          Continuar <svg class="ic"><use href="#i-arrow-r"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pay-section">
+  <div class="wrap">
+    <header class="book-head">
+      <h2>Elige la opción que mejor se adapte a ti</h2>
+      <p>Dos formas claras de confirmar tu cita, sin sorpresas.</p>
+    </header>
+    <div class="pay-duo">
+      <article class="pay-card rec">
+        <span class="tag">Recomendado</span>
+        <h3>Opción 1: Paga en línea</h3>
+        <ul>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Asegura tu cita al instante</li>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Confirmación a tu celular</li>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Pago 100% seguro</li>
+        </ul>
+        <div class="amount">$55.00<small>Esterilización hembra</small></div>
+        <a class="btn btn-green" href="reserva-mascota.html" data-needs-login>Pagar ahora</a>
+      </article>
+      <article class="pay-card later">
+        <h3>Opción 2: Paga el día de la cita</h3>
+        <ul>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Reserva sin pagar ahora</li>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Pagas en la clínica</li>
+          <li><svg class="ic ic-sm"><use href="#i-check"/></svg> Ideal si prefieres decidir después</li>
+        </ul>
+        <div class="amount soft">Reserva ahora<small>Sin cobro inmediato</small></div>
+        <a class="btn btn-orange" href="reserva-mascota.html" data-needs-login>Reservar ahora</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-teaser" id="reseñas">
+  <div class="wrap">
+    <header class="book-head center">
+      <h2>Tutores que confían en Cat Home</h2>
+      <p>Lo que dicen las familias después de esterilizar a sus gatos.</p>
+    </header>
+    <div class="review-grid">
+      <article class="review-card">
+        <div class="who">
+          <span class="avatar initials">MJ</span>
+          <div>
+            <strong>María José y Luna</strong>
+            <div class="stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></div>
+          </div>
+        </div>
+        <p>“Excelente atención, mi gata se recuperó muy bien y el trato fue increíble.”</p>
+      </article>
+      <article class="review-card">
+        <div class="who">
+          <img class="avatar" src="assets/gatos/GATO1.png" alt="">
+          <div>
+            <strong>Andrés y Simba</strong>
+            <div class="stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></div>
+          </div>
+        </div>
+        <p>“100% recomendado, se nota que aman a los gatos y saben lo que hacen.”</p>
+      </article>
+      <article class="review-card">
+        <div class="who">
+          <span class="avatar initials">PN</span>
+          <div>
+            <strong>Paola y Nube</strong>
+            <div class="stars"><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg><svg class="ic"><use href="#i-star"/></svg></div>
+          </div>
+        </div>
+        <p>“Me explicaron todo el proceso y me dieron mucha tranquilidad.”</p>
+      </article>
+    </div>
+    <div class="more-wrap">
+      <a class="btn btn-soft" href="testimonios.html">Ver más testimonios</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer" id="contacto" data-footer></footer>
+<script src="assets/app.js"></script>
+<script>
+const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const st = { dia: 16, mes: 4, anio: 2026 };
+
+function pintarCal() {
+  document.getElementById("cal-label").textContent = MESES[st.mes] + " " + st.anio;
+  const cal = document.getElementById("cal");
+  let html = ["Do","Lu","Ma","Mi","Ju","Vi","Sá"].map((d) => `<div class="dow">${d}</div>`).join("");
+  const inicio = new Date(st.anio, st.mes, 1).getDay();
+  const total = new Date(st.anio, st.mes + 1, 0).getDate();
+  for (let i = 0; i < inicio; i++) html += "<div></div>";
+  for (let d = 1; d <= total; d++)
+    html += `<button type="button" class="day${d === st.dia ? " on" : ""}" data-d="${d}">${d}</button>`;
+  cal.innerHTML = html;
+  cal.querySelectorAll(".day").forEach((b) =>
+    b.addEventListener("click", () => { st.dia = +b.dataset.d; pintarCal(); })
+  );
+}
+
+document.getElementById("prev-m").addEventListener("click", () => {
+  st.mes--; if (st.mes < 0) { st.mes = 11; st.anio--; } pintarCal();
+});
+document.getElementById("next-m").addEventListener("click", () => {
+  st.mes++; if (st.mes > 11) { st.mes = 0; st.anio++; } pintarCal();
+});
+document.querySelectorAll(".svc-option").forEach((op) =>
+  op.addEventListener("click", () => {
+    document.querySelectorAll(".svc-option").forEach((o) => o.classList.remove("on"));
+    op.classList.add("on");
+  })
+);
+document.querySelectorAll(".time-slot").forEach((t) =>
+  t.addEventListener("click", () => {
+    document.querySelectorAll(".time-slot").forEach((x) => x.classList.remove("on"));
+    t.classList.add("on");
+  })
+);
+pintarCal();
+</script>
+</body>
+</html>

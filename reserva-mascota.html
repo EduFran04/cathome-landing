@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selecciona tu mascota — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="servicios.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+      <div class="stepper" aria-label="Progreso de reserva">
+        <div class="st on"><span class="dot">1</span><span class="lab">Mascota</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">2</span><span class="lab">Datos</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">3</span><span class="lab">Fecha</span></div>
+        <div class="line"></div>
+        <div class="st"><span class="dot">4</span><span class="lab">Pago</span></div>
+      </div>
+      <span style="width:72px"></span>
+    </div>
+
+    <header class="book-hero">
+      <div class="eyebrow">PASO 1 DE 4</div>
+      <h1>Selecciona a tu <span class="script">mascota</span>
+        <svg class="ic spark" style="color:var(--green-mid)"><use href="#i-spark"/></svg>
+      </h1>
+      <p>Elige el gato para el que deseas agendar la cita.</p>
+    </header>
+
+    <section class="book-panel">
+      <div class="panel-head">
+        <div class="ico"><svg class="ic"><use href="#i-cat"/></svg></div>
+        <div>
+          <h2>Mis mascotas</h2>
+          <p>Selecciona la mascota para continuar con la reserva.</p>
+        </div>
+      </div>
+
+      <!-- Fotos finales: GATO7, GATO8, GATO9 (+ GATO10 en otras pantallas). Por ahora placeholders. -->
+      <div class="pet-grid" id="petGrid">
+        <button type="button" class="pet-card on" data-pet="misu">
+          <span class="chk"><svg class="ic"><use href="#i-check"/></svg></span>
+          <img src="assets/gatos/GATO7.png" alt="Misu" onerror="this.src='assets/gatos/GATO1.png'">
+          <strong>Misu</strong>
+          <small>Hembra · 2 años · 4 kg</small>
+        </button>
+        <button type="button" class="pet-card" data-pet="luna">
+          <span class="chk"><svg class="ic"><use href="#i-check"/></svg></span>
+          <img src="assets/gatos/GATO8.png" alt="Luna" onerror="this.src='assets/gatos/GATO2.png'">
+          <strong>Luna</strong>
+          <small>Hembra · 3 años · 3.5 kg</small>
+        </button>
+        <button type="button" class="pet-card" data-pet="simba">
+          <span class="chk"><svg class="ic"><use href="#i-check"/></svg></span>
+          <img src="assets/gatos/GATO9.png" alt="Simba" onerror="this.src='assets/gatos/GATO3.png'">
+          <strong>Simba</strong>
+          <small>Macho · 1 año · 4.2 kg</small>
+        </button>
+        <button type="button" class="pet-card add" data-pet="add">
+          <span class="plus">+</span>
+          <strong>Agregar otra mascota</strong>
+        </button>
+      </div>
+
+      <div class="help-banner">
+        <div class="txt">
+          <svg class="ic" style="color:var(--green-mid)"><use href="#i-paw-heart"/></svg>
+          ¿No ves a tu mascota? Puedes agregarla en cualquier momento desde tu perfil.
+        </div>
+        <a class="btn btn-soft" href="#">Ir a mi perfil <svg class="ic"><use href="#i-arrow-r"/></svg></a>
+      </div>
+    </section>
+
+    <div class="book-actions">
+      <a class="btn-outline-green" href="servicios.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
+      </a>
+      <a class="btn btn-orange" href="reserva-datos.html">
+        Siguiente <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+<script>
+  document.querySelectorAll("#petGrid .pet-card:not(.add)").forEach((card) => {
+    card.addEventListener("click", () => {
+      document.querySelectorAll("#petGrid .pet-card").forEach((c) => c.classList.remove("on"));
+      card.classList.add("on");
+    });
+  });
+</script>
+</body>
+</html>

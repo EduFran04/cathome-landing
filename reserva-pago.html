@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pago en línea — Cat Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body data-nav="servicios" data-fixed-width="1400" data-design="1180" data-density="reserva">
+
+<header class="site-header" data-header></header>
+
+<main class="book-flow">
+  <div class="deco-bg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="book-top">
+      <a class="book-back" href="reserva-confirma.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Volver
+      </a>
+      <div class="stepper" aria-label="Progreso de reserva">
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Mascota</span></div>
+        <div class="line on"></div>
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Datos</span></div>
+        <div class="line on"></div>
+        <div class="st done"><span class="dot"><svg class="ic" style="width:14px;height:14px"><use href="#i-check"/></svg></span><span class="lab">Fecha</span></div>
+        <div class="line on"></div>
+        <div class="st on"><span class="dot">4</span><span class="lab">Pago</span></div>
+      </div>
+      <span style="width:72px"></span>
+    </div>
+
+    <header class="book-hero">
+      <div class="eyebrow">PASO 4 DE 4</div>
+      <h1>Pago en <span class="script">línea</span>
+        <svg class="ic spark" style="color:var(--orange)"><use href="#i-spark"/></svg>
+      </h1>
+      <p>Realiza tu pago de forma segura, rápida y confiable.</p>
+    </header>
+
+    <div class="pago-layout">
+      <div>
+        <div class="pay-option on" id="payCard">
+          <div class="po-head">
+            <input type="radio" name="pay" checked>
+            Tarjeta de crédito o débito
+          </div>
+          <p class="hint">
+            <svg class="ic" style="width:14px;height:14px;vertical-align:-2px"><use href="#i-lock"/></svg>
+            Transacción segura y encriptada
+          </p>
+          <div class="card-fields form-grid">
+            <div class="field full">
+              <label>Número de tarjeta</label>
+              <input type="text" placeholder="ACCT-000035" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label>Fecha de expiración</label>
+              <input type="text" placeholder="MM / AA">
+            </div>
+            <div class="field">
+              <label>Código de seguridad</label>
+              <input type="text" placeholder="CVC">
+            </div>
+            <div class="field full">
+              <label>Nombre del titular</label>
+              <input type="text" placeholder="Como aparece en la tarjeta">
+            </div>
+            <div class="full">
+              <a class="btn btn-green btn-block" href="reserva-exito.html" style="width:100%;justify-content:center">
+                Pagar y confirmar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pay-option" id="payCash">
+          <div class="po-head">
+            <input type="radio" name="pay">
+            Pago en efectivo
+          </div>
+          <p class="hint">Realiza tu pago en la clínica el día de tu cita.</p>
+          <div class="info-note" style="margin-left:28px;margin-top:10px">
+            <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-question"/></svg>
+            <span>Tu cita quedará reservada y deberás pagar en efectivo en la clínica el día de la consulta.</span>
+          </div>
+        </div>
+
+        <div class="trust-trio">
+          <div>
+            <svg class="ic"><use href="#i-shield"/></svg>
+            Transacción 100% segura
+          </div>
+          <div>
+            <svg class="ic"><use href="#i-spark"/></svg>
+            Confirmación inmediata
+          </div>
+          <div>
+            <svg class="ic"><use href="#i-kit"/></svg>
+            Múltiples métodos de pago
+          </div>
+        </div>
+      </div>
+
+      <aside class="book-panel summary-card" style="margin:0;position:sticky;top:88px">
+        <div class="sum-head">
+          <h2>Resumen de la cita</h2>
+          <a class="edit" href="reserva-confirma.html">Editar</a>
+        </div>
+        <div class="sum-row">
+          <div class="ico"><svg class="ic"><use href="#i-paw-heart"/></svg></div>
+          <div>
+            <strong>
+              <img src="assets/gatos/GATO10.png" alt="Misu" onerror="this.src='assets/gatos/GATO4.png'">
+              Misu
+            </strong>
+            <small>Gato · Hembra · 2 años · 4 kg</small>
+          </div>
+        </div>
+        <div class="sum-row">
+          <div class="ico"><svg class="ic"><use href="#i-calendar"/></svg></div>
+          <div>
+            <strong>Sábado, 16 de mayo de 2026</strong>
+            <small>10:00 a.m.</small>
+          </div>
+        </div>
+        <div class="sum-row">
+          <div class="ico"><svg class="ic"><use href="#i-stethoscope"/></svg></div>
+          <div>
+            <strong>Esterilización felina</strong>
+          </div>
+          <div class="price">$55.00</div>
+        </div>
+        <div class="sum-row">
+          <div class="ico"><svg class="ic"><use href="#i-user"/></svg></div>
+          <div>
+            <strong>María López</strong>
+            <small>+503 1234 5678 · maria.lopez@email.com</small>
+          </div>
+        </div>
+        <div class="secure-band">
+          <svg class="ic" style="flex:none;color:var(--green-mid)"><use href="#i-shield"/></svg>
+          Tu información está segura. Utilizamos protocolos de seguridad para proteger tus datos.
+        </div>
+      </aside>
+    </div>
+
+    <div class="book-actions">
+      <a class="btn-outline-green" href="reserva-confirma.html">
+        <svg class="ic"><use href="#i-arrow-l"/></svg> Anterior
+      </a>
+      <a class="btn btn-orange" href="reserva-exito.html">
+        Confirmar cita <svg class="ic"><use href="#i-arrow-r"/></svg>
+      </a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" data-footer></footer>
+<script src="assets/app.js"></script>
+<script>
+  const card = document.getElementById("payCard");
+  const cash = document.getElementById("payCash");
+  function setPay(mode) {
+    card.classList.toggle("on", mode === "card");
+    cash.classList.toggle("on", mode === "cash");
+    card.querySelector("input").checked = mode === "card";
+    cash.querySelector("input").checked = mode === "cash";
+  }
+  card.addEventListener("click", () => setPay("card"));
+  cash.addEventListener("click", () => setPay("cash"));
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# Local / tooling
+.vercel
+.env
+.env.*
+!.env.example
+
+# Dev helpers (not part of the site)
+_fix_css.py
+assets/referencia/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
