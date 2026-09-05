@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    Cat Home — capa de datos (JSON + localStorage)
    Seed: assets/data/db.json  |  Persistencia: localStorage
    ============================================================ */
@@ -15,7 +15,7 @@ const Store = (() => {
         id: "u_demo",
         name: "María José",
         phone: "70000000",
-        email: "maria@cathome.demo",
+        email: "maria@cathome.com",
         password: "demo123",
         address: "Colonia Escalón, San Salvador",
         provider: "phone",
@@ -45,7 +45,7 @@ const Store = (() => {
         id: "u_pamela",
         name: "Pamela",
         phone: "70110011",
-        email: "pamela@cathome.demo",
+        email: "pamela@cathome.com",
         password: "pamela26",
         address: "San Salvador",
         provider: "email",
@@ -55,7 +55,7 @@ const Store = (() => {
         id: "u_valerie",
         name: "Valerie",
         phone: "70120022",
-        email: "valerie@cathome.demo",
+        email: "valerie@cathome.com",
         password: "valerie26",
         address: "Santa Tecla",
         provider: "email",
@@ -65,7 +65,7 @@ const Store = (() => {
         id: "u_ricardo",
         name: "Ricardo",
         phone: "70130033",
-        email: "ricardo@cathome.demo",
+        email: "ricardo@cathome.com",
         password: "ricardo26",
         address: "Antiguo Cuscatlán",
         provider: "email",
@@ -75,7 +75,7 @@ const Store = (() => {
         id: "u_paola",
         name: "Paola",
         phone: "70140044",
-        email: "paola@cathome.demo",
+        email: "paola@cathome.com",
         password: "paola26",
         address: "Soyapango",
         provider: "email",
@@ -85,7 +85,7 @@ const Store = (() => {
         id: "u_walter",
         name: "Walter",
         phone: "70150055",
-        email: "walter@cathome.demo",
+        email: "walter@cathome.com",
         password: "walter26",
         address: "Mejicanos",
         provider: "email",
@@ -275,27 +275,34 @@ const Store = (() => {
   function mergeSeed(db) {
     let changed = false;
     for (const u of SEED.users) {
-      const exists = db.users.some(
-        (x) => x.id === u.id || (u.email && x.email === u.email)
+      const i = db.users.findIndex(
+        (x) => x.id === u.id || (u.email && x.email === u.email) ||
+          (u.id.startsWith("u_") && x.id === u.id)
       );
-      if (!exists) {
+      // también localizar por id aunque el email viejo sea .demo
+      const byId = db.users.findIndex((x) => x.id === u.id);
+      const idx = byId >= 0 ? byId : i;
+      if (idx < 0) {
         db.users.push(clone(u));
         changed = true;
-      } else {
-        const i = db.users.findIndex(
-          (x) => x.id === u.id || (u.email && x.email === u.email)
-        );
-        if (i >= 0 && u.password && db.users[i].password !== u.password) {
-          db.users[i] = {
-            ...db.users[i],
-            name: u.name,
-            phone: u.phone || db.users[i].phone,
-            email: u.email,
-            password: u.password,
-            provider: u.provider || db.users[i].provider,
-          };
-          changed = true;
-        }
+        continue;
+      }
+      const cur = db.users[idx];
+      if (
+        cur.email !== u.email ||
+        cur.password !== u.password ||
+        cur.phone !== u.phone ||
+        cur.name !== u.name
+      ) {
+        db.users[idx] = {
+          ...cur,
+          name: u.name,
+          phone: u.phone || cur.phone,
+          email: u.email,
+          password: u.password || cur.password,
+          provider: u.provider || cur.provider,
+        };
+        changed = true;
       }
     }
     for (const p of SEED.pets) {
